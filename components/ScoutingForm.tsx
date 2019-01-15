@@ -86,7 +86,10 @@ export default class Bananas extends Component<Props, State> {
     switch(field.type) {
       case FieldType.Bool: {
         return (
-          <Item inlineLabel key={field.id}>
+          <Item inlineLabel
+              key={field.id}
+              style={{flex:1,  justifyContent:"space-between"}}
+            >
             <Label>{field.name}</Label>
             <Switch
               value={this.state[field.id]}
