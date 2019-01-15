@@ -1,13 +1,13 @@
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
- *
- * @format
- * @flow
  */
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Hello} from './components/Hello';
+import Bananas from './components/Bananas';
+import ScoutingForm from './components/ScoutingForm';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -16,14 +16,26 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+const things = [
+  "cat",
+  "dog",
+  "roller coaster"
+]
+
 type Props = {};
 export default class App extends Component<Props> {
+  listThings() {
+    const result = [];
+    for (let x of things) {
+      result.push(<Text style={styles.welcome}>{x}</Text>)
+    }
+    return result; 
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to TypeScript React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <ScoutingForm></ScoutingForm>
       </View>
     );
   }
