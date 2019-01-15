@@ -1,4 +1,10 @@
 {
   "name": "ScoutingApp",
-  "displayName": "ScoutingApp"
+  "displayName": "ScoutingApp",
+  "expo": {
+    "name": "ScoutingApp",
+    "slug": "scouting-app",
+    "sdkVersion": "32.0.0",
+    "privacy": "private"
+  }
 }

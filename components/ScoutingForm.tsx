@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {Text, View, StyleSheet, Switch, TextInput} from 'react-native';
+import {Dimensions, Text, View, StyleSheet, Switch, TextInput} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
+import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
 import {AppRegistry, Image} from 'react-native';
 
 enum FieldType {
@@ -85,9 +86,8 @@ export default class Bananas extends Component<Props, State> {
     switch(field.type) {
       case FieldType.Bool: {
         return (
-          <View style={styles.fieldContainer}>
-            <Text>{field.name}</Text>
-            <Text>{field.description}</Text>
+          <Item inlineLabel key={field.id}>
+            <Label>{field.name}</Label>
             <Switch
               value={this.state[field.id]}
               onValueChange={(x) => {
@@ -96,43 +96,52 @@ export default class Bananas extends Component<Props, State> {
               }
               }
             ></Switch>
-          </View>
+          </Item>
         );
       }
       case FieldType.Number: {
         return (
-          <View style={styles.fieldContainer}>
-            <Text>{field.name}</Text>
-            <Text>{field.description}</Text>
-            <TextInput 
-              onChangeText={(x) => this.setState({[field.id]: x})}
-              keyboardType='number-pad'></TextInput>
-          </View>
+          <Item floatingLabel key={field.id}>
+            <Label>{field.name}</Label>
+            <Input 
+            onChangeText={(x) => this.setState({[field.id]: x})}
+            keyboardType='number-pad'/>
+          </Item>
         );
       }
       case FieldType.String: {
         return (
-          <View style={styles.fieldContainer}>
-            <Text>{field.name}</Text>
-            <Text>{field.description}</Text>
+          <Item inlineLabel key={field.id}>
+            <Label>{field.name}</Label>
             <TextInput 
               onChangeText={(x) => this.setState({[field.id]: x})}
               ></TextInput>
-          </View>
+          </Item>
         );
       }
     }
   }
   render() {
     return (
-      <View>
+      <Content>
+        <Form>
         {fields.map(this.renderField.bind(this))}
-        <Text>{JSON.stringify(this.state)}</Text>
-        <QRCode
-          value={JSON.stringify(this.state)}/>
-      </View>
+        </Form>
+        <View style={{margin: 20}}>
+          <QRCode 
+            size={this.getQRWidth()}
+            value={JSON.stringify(this.state)}/>
+        </View>
+          <Text>{JSON.stringify(this.state)}
+        {JSON.stringify(Dimensions.get('window'))}</Text>
+      </Content>
     );
   }
+
+  private getQRWidth() {
+    return Dimensions.get('window')['width'] * 0.8
+  }
+
 }
 
 const styles = StyleSheet.create({
