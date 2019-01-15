@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Dimensions, Text, View, StyleSheet, Switch, TextInput } from 'react-native';
+import React, {Component} from 'react';
+import {Dimensions, Text, View, StyleSheet, Switch, TextInput} from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { Container, Header, Content, Form, Item, Input, Label, Picker } from 'native-base';
-import { AppRegistry, Image } from 'react-native';
+import { Container, Header, Content, Form, Item, Input, Label, Picker} from 'native-base';
+import {AppRegistry, Image} from 'react-native';
 
 enum FieldType {
   Number,
@@ -31,17 +31,17 @@ const fields: Field[] = [
     type: FieldType.Number
   },
   {
-    id: "defense",
-    name: "Played defense",
-    description: "Entered other alliance's territory for reasonable amount of time",
-    type: FieldType.Bool
-  },
-  {
     id: "level",
     name: "Level climbed",
     description: "Level the robot climbed to at the end of the match.",
     type: FieldType.Choose,
     options: ['Level 1', 'Level 2', 'Level 3'],
+  },
+  {
+    id: "defense",
+    name: "Played defense",
+    description: "Entered other alliance's territory for reasonable amount of time",
+    type: FieldType.Bool
   },
   {
     id: "disabled",
@@ -62,7 +62,7 @@ interface State {
   hatches?: number;
   defense?: boolean;
   disabled?: boolean;
-  notes?: string;
+  notes?: string; 
 }
 
 export interface Props {
@@ -83,18 +83,18 @@ export default class Bananas extends Component<Props, State> {
   }
 
   private renderField(field: Field) {
-    switch (field.type) {
+    switch(field.type) {
       case FieldType.Bool: {
         return (
           <Item inlineLabel
-            key={field.id}
-            style={{ flex: 1, justifyContent: "space-between" }}
-          >
+              key={field.id}
+              style={{flex:1,  justifyContent:"space-between"}}
+            >
             <Label>{field.name}</Label>
             <Switch
               value={this.state[field.id]}
               onValueChange={(x) => {
-                this.setState({ [field.id]: x })
+                this.setState({[field.id]: x})
                 return x;
               }
               }
@@ -106,9 +106,9 @@ export default class Bananas extends Component<Props, State> {
         return (
           <Item floatingLabel key={field.id}>
             <Label>{field.name}</Label>
-            <Input
-              onChangeText={(x) => this.setState({ [field.id]: x })}
-              keyboardType='number-pad' />
+            <Input 
+            onChangeText={(x) => this.setState({[field.id]: x})}
+            keyboardType='number-pad'/>
           </Item>
         );
       }
@@ -116,9 +116,9 @@ export default class Bananas extends Component<Props, State> {
         return (
           <Item inlineLabel key={field.id}>
             <Label>{field.name}</Label>
-            <TextInput
-              onChangeText={(x) => this.setState({ [field.id]: x })}
-            ></TextInput>
+            <TextInput 
+              onChangeText={(x) => this.setState({[field.id]: x})}
+              ></TextInput>
           </Item>
         );
       }
@@ -126,17 +126,17 @@ export default class Bananas extends Component<Props, State> {
         return (
           <Item inlineLabel key={field.id}>
             <Label>{field.name}</Label>
-            <TextInput
-              onChangeText={(x) => this.setState({ [field.id]: x })}
-            ></TextInput>
+            <TextInput 
+              onChangeText={(x) => this.setState({[field.id]: x})}
+              ></TextInput>
             <Picker
               mode="dropdown"
               placeholder="Pick one"
               selectedValue={this.state[field.id]}
-              onValueChange={(x) => this.setState({ [field.id]: x })}
-            >
+              onValueChange={(x) => this.setState({[field.id]: x})}
+              >
               <Picker.Item label="" value={-1}></Picker.Item>
-              {field.options!.map((val, idx) => <Picker.Item label={val} value={idx}></Picker.Item>)}
+              {field.options!.map((val, idx) => <Picker.Item label={val} value={idx} key={idx}></Picker.Item>)}
             </Picker>
           </Item>
         );
@@ -147,15 +147,14 @@ export default class Bananas extends Component<Props, State> {
     return (
       <Content>
         <Form>
-          {fields.map(this.renderField.bind(this))}
+        {fields.map(this.renderField.bind(this))}
         </Form>
-        <View style={{ margin: 20 }}>
-          <QRCode
+        <View style={{margin: 20, alignSelf:"center"}}>
+          <QRCode 
             size={this.getQRWidth()}
-            value={JSON.stringify(this.state)} />
+            value={JSON.stringify(this.state)}/>
         </View>
-        <Text>{JSON.stringify(this.state)}
-          {JSON.stringify(Dimensions.get('window'))}</Text>
+          <Text>{JSON.stringify(this.state)}</Text>
       </Content>
     );
   }
