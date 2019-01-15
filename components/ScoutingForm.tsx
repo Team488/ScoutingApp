@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, StyleSheet, Switch, TextInput} from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
 import {AppRegistry, Image} from 'react-native';
 
 enum FieldType {
@@ -127,6 +128,8 @@ export default class Bananas extends Component<Props, State> {
       <View>
         {fields.map(this.renderField.bind(this))}
         <Text>{JSON.stringify(this.state)}</Text>
+        <QRCode
+          value={JSON.stringify(this.state)}/>
       </View>
     );
   }
