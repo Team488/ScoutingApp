@@ -70,7 +70,7 @@ export interface Props {
   enthusiasmLevel?: number
 }
 
-export default class Bananas extends Component<Props, State> {
+export default class ScoutingForm extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

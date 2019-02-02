@@ -9,6 +9,7 @@ import { Container, Header, Content, Form, Item, Input, Label } from 'native-bas
 import {Hello} from './components/Hello';
 import Bananas from './components/Bananas';
 import ScoutingForm from './components/ScoutingForm';
+import EventLogger from './components/EventLogger';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -44,7 +45,7 @@ export default class App extends Component<Props> {
             }}
           >Team xBot Scouting App</Text></Header>
           <Content>
-            <ScoutingForm></ScoutingForm>
+            <EventLogger></EventLogger>
         </Content>
       </Container>
     );
