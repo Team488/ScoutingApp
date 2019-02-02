@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import QRCode from 'react-native-qrcode-svg';
-import {StyleSheet, View} from 'react-native';
-import {Button, Card, CardItem, Col, Container, Content, Grid, Header, Row, Text} from 'native-base';
+import {StyleSheet, Vibration, View} from 'react-native';
+import {ActionSheet, Button, Card, CardItem, Col,
+   Container, Content, Grid, Header, List, ListItem, 
+   Row, Text} from 'native-base';
 import {AppRegistry, Image} from 'react-native';
+import Timer from './Timer';
 
 type Event = "got_hatch" 
   | "got_cargo"
@@ -23,14 +26,45 @@ interface Props {
 
 }
 
+const BUTTONS = [
+  "Level 1",
+  "Level 2",
+  "Level 3"
+]
+
 export default class EventLogger extends Component<Props, State> {
   addEvent(x: Event) {
+    Vibration.vibrate(2000, false);
     console.log('Got event ', x);
+    if (x == 'lifted_self') {
+      ActionSheet.show(
+        {
+          options: BUTTONS,
+          cancelButtonIndex: 0,
+          destructiveButtonIndex: 0,
+          title: "Which level"
+        },
+        (buttonIndex) => {
+          console.log("Got button ", buttonIndex)
+        }
+      )
+    }
   }
+
+  renderEvents() {
+    return (
+      <List>
+        <ListItem></ListItem>
+      </List>
+    )
+  }
+
   render() {
     return (
       <Container>
-        <Header />
+        <Header >
+          <Timer></Timer>
+        </Header>
         <Content>
         <Grid>
           <Col style={styles.leftColumn}>
@@ -93,7 +127,7 @@ export default class EventLogger extends Component<Props, State> {
             <Row style={{height: 75}}></Row>
           </Col>
         </Grid>
-
+         {this.renderEvents()} 
         </Content>
       </Container>
     )

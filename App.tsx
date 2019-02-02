@@ -5,7 +5,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, TouchableWithoutFeedback} from 'react-native';
-import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
+import { Container, Header, Content, Form, Item, Input, Label,Root} from 'native-base';
 import {Hello} from './components/Hello';
 import Bananas from './components/Bananas';
 import ScoutingForm from './components/ScoutingForm';
@@ -36,6 +36,7 @@ export default class App extends Component<Props> {
 
   render() {
     return (
+      <Root>
       <Container>
         <Header>
           <Text
@@ -48,6 +49,7 @@ export default class App extends Component<Props> {
             <EventLogger></EventLogger>
         </Content>
       </Container>
+      </Root>
     );
   }
 }
