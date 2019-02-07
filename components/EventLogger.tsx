@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import {StyleSheet, Vibration, View} from 'react-native';
-import {ActionSheet, Button, Card, CardItem, Col,
+import {ActionSheet, Button, Body, Left, Card, CardItem, Col,
    Container, Content, Grid, Header, List, ListItem, 
-   Row, Text} from 'native-base';
+   Row, Icon, Title, Text} from 'native-base';
 import {AppRegistry, Image} from 'react-native';
 import Timer from './Timer';
 
@@ -63,7 +63,14 @@ export default class EventLogger extends Component<Props, State> {
     return (
       <Container>
         <Header >
-          <Timer></Timer>
+        <Left>
+            <Button transparent>
+              <Icon name='arrow-back' />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Header</Title>
+          </Body>
         </Header>
         <Content>
         <Grid>
