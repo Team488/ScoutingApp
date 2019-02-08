@@ -6,37 +6,18 @@ import React, {Component} from 'react';
 import { Button, Text, View} from 'react-native';
 import Orientation, { orientation } from "react-native-orientation";
 import { Root } from 'native-base';
-import EventLogger from './components/EventLogger';
+import EventLogger from './src/record/EventPanel';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-
-class HomeScreen extends React.Component<NavigationScreenProps> {
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Logger"
-          onPress={() => navigate('EventLogger')}
-        />
-      </View>
-    );
-  }
-}
-
-class DetailsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Details Screen</Text>
-      </View>
-    );
-  }
-}
+import {HomeScreen} from './src/home/HomeScreen';
+import {StartScreen} from './src/start/StartScreen';
+import {RecordScreen} from './src/record/RecordScreen';
+import {ReviewScreen} from './src/review/ReviewScreen';
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
-  EventLogger: EventLogger 
+  Start: StartScreen,
+  Record: RecordScreen,
+  Review: ReviewScreen
 },
 {
   initialRouteName: "Home"

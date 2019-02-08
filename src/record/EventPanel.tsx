@@ -5,7 +5,6 @@ import {ActionSheet, Button, Body, Left, Card, CardItem, Col,
    Container, Content, Grid, Header, List, ListItem, 
    Row, Icon, Title, Text} from 'native-base';
 import {AppRegistry, Image} from 'react-native';
-import Timer from './Timer';
 
 type Event = "got_hatch" 
   | "got_cargo"
@@ -32,7 +31,7 @@ const BUTTONS = [
   "Level 3"
 ]
 
-export default class EventLogger extends Component<Props, State> {
+export class EventPanel extends Component<Props, State> {
   addEvent(x: Event) {
     Vibration.vibrate(2000, false);
     console.log('Got event ', x);
@@ -62,16 +61,6 @@ export default class EventLogger extends Component<Props, State> {
   render() {
     return (
       <Container>
-        <Header >
-        <Left>
-            <Button transparent>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Header</Title>
-          </Body>
-        </Header>
         <Content>
         <Grid>
           <Col style={styles.leftColumn}>
