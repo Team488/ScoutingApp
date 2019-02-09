@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import {StyleSheet, Vibration, View} from 'react-native';
+import Modal from "react-native-modal";
 import {ActionSheet, Button, Body, Left, Card, CardItem, Col,
    Container, Content, Grid, Header, List, ListItem, 
    Row, Icon, Title, Text} from 'native-base';
 import {AppRegistry, Image} from 'react-native';
+import DetailModal from './DetailModal';
 
 type Event = "got_hatch" 
   | "got_cargo"
@@ -18,20 +20,28 @@ type Event = "got_hatch"
   | "lifted_self"
   | "lifted_team";
 
-interface State {
-}
-
-interface Props {
-
-}
-
 const BUTTONS = [
   "Level 1",
   "Level 2",
   "Level 3"
 ]
 
+type State = {
+  showDialog: boolean,
+  dialogContent: JSX.Element
+}
+
+interface Props {
+
+}
 export class EventPanel extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      showDialog: false,
+      dialogContent: <Text>Empty Dialog</Text> 
+    }
+  }
   addEvent(x: Event) {
     Vibration.vibrate(2000, false);
     console.log('Got event ', x);
@@ -58,6 +68,28 @@ export class EventPanel extends Component<Props, State> {
     )
   }
 
+  scoreRocket() {
+    console.log('Score rocket');
+    this.setState({
+      dialogContent: <Text>Which Rocket?</Text>,
+      showDialog: true
+    });
+  }
+
+  scoreShip() {
+    console.log('Score ship');
+    this.setState({
+      dialogContent: <Text>Which Ship?</Text>,
+      showDialog: true
+    });
+  }
+
+  dialogDone() {
+    this.setState({
+      showDialog: false
+    })
+  }
+
   render() {
     return (
       <Container>
@@ -77,9 +109,14 @@ export class EventPanel extends Component<Props, State> {
               </Button>
             </Row>
             <Row style={styles.row}>
+              <Text>Scored</Text>
               <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('scored_hatch')}>
-                <Text> Scored Hatch</Text>
+                  onPress={(x) => this.scoreRocket()}>
+                <Text>Rocket</Text>
+              </Button>
+              <Button large style={styles.eventButton} 
+                  onPress={(x) => this.scoreShip()}>
+                <Text>Ship</Text>
               </Button>
             </Row>
             <Row style={styles.row}>
@@ -125,6 +162,10 @@ export class EventPanel extends Component<Props, State> {
         </Grid>
          {this.renderEvents()} 
         </Content>
+        <DetailModal 
+          show={this.state.showDialog}
+          onDone={this.dialogDone.bind(this)}
+          render={this.state.dialogContent}></DetailModal>
       </Container>
     )
   }

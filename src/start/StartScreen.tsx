@@ -1,7 +1,8 @@
 import React from 'react';
-import { View} from 'react-native';
-import { Button, Text } from 'native-base';
+import { View, Text} from 'react-native';
+import { Button } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import DetailModal from '../record/DetailModal';
 
 /*
 TODO:
