@@ -33,8 +33,10 @@ If you already have the dev version of the app installed, you might need to unin
 
 # TODO
 
-- timer component
 - add events to log
+- scoring modal
+- debounce button inputs
+- timer component
 - delete events with confirm
 - add option for lifted events
 - screen that shows event log as qr code

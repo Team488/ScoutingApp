@@ -1,12 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import QRCode from 'react-native-qrcode-svg';
-import {StyleSheet, Vibration, View} from 'react-native';
+import { StyleSheet, Vibration, View } from 'react-native';
 import Modal from "react-native-modal";
-import {ActionSheet, Button, Body, Left, Card, CardItem, Col,
-   Container, Content, Grid, Header, List, ListItem, 
-   Row, Icon, Title, Text} from 'native-base';
-import {AppRegistry, Image} from 'react-native';
+import {
+  ActionSheet, Button, Body, Left, Card, CardItem, Col,
+  Container, Content, Grid, Header, List, ListItem,
+  Row, Icon, Title, Text
+} from 'native-base';
+import { AppRegistry, Image } from 'react-native';
 import DetailModal from './DetailModal';
+import ButtonCard from './ButtonCard';
 
 const BUTTONS = [
   "Level 1",
@@ -27,7 +30,7 @@ export class EventPanel extends Component<Props, State> {
     super(props);
     this.state = {
       showDialog: false,
-      dialogContent: <Text>Empty Dialog</Text> 
+      dialogContent: <Text>Empty Dialog</Text>
     }
   }
   addEvent(x: Event) {
@@ -81,112 +84,119 @@ export class EventPanel extends Component<Props, State> {
   render() {
     return (
       <Content>
-        <Grid>
-          <Col style={styles.leftColumn}>
-            <Row style={styles.row}>
-              <View style={{flex: 1, flexDirection:"column"}}>
-                <Text style={styles.cardTitle}>Scored HATCH on</Text>
-                <View style={{flex: 1, flexDirection:"row"}}>
-                  <Button large style={styles.eventButton} 
-                      onPress={(x) => this.scoreRocket()}>
+        <Content>
+          <Grid>
+            <Col style={styles.leftColumn}>
+              <Row style={styles.row}>
+                <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "lightyellow" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreRocket()}>
                     <Text>Rocket</Text>
                   </Button>
-                  <Button large style={styles.eventButton} 
-                      onPress={(x) => this.scoreShip()}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreShip()}>
                     <Text>Ship</Text>
                   </Button>
-                </View>
-              </View>
-            </Row>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('got_cargo')}>
-                <Text> Got Cargo</Text>
-              </Button>
-            </Row>
-            <Row style={styles.row}>
-              <Text>Scored</Text>
-              <Button large style={styles.eventButton} 
+                </ButtonCard>
+              </Row>
+              <Row style={styles.row}>
+                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "lightyellow" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreRocket()}>
+                    <Text>Floor</Text>
+                  </Button>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreShip()}>
+                    <Text>Station</Text>
+                  </Button>
+                </ButtonCard>
+              </Row>
+            </Col>
+            <Col style={styles.rightColumn}>
+              <Row style={styles.row}>
+                <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "lightblue" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreRocket()}>
+                    <Text>Rocket</Text>
+                  </Button>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreShip()}>
+                    <Text>Ship</Text>
+                  </Button>
+                </ButtonCard>
+              </Row>
+              <Row style={styles.row}>
+                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "lightblue" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreRocket()}>
+                    <Text>Floor</Text>
+                  </Button>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.scoreShip()}>
+                    <Text>Station</Text>
+                  </Button>
+                </ButtonCard>
+              </Row>
+            </Col>
+          </Grid>
+        </Content>
+        <Content>
+          <Grid>
+            <Col style={styles.leftColumn}>
+              <Row style={styles.row}>
+                <Button large style={styles.eventButton}
                   onPress={(x) => this.scoreRocket()}>
-                <Text>Rocket</Text>
-              </Button>
-              <Button large style={styles.eventButton} 
+                  <Text>Dropped Hatch</Text>
+                </Button>
+              </Row>
+              <Row style={styles.row}>
+                <Button large style={styles.eventButton}
+                  onPress={(x) => this.scoreRocket()}>
+                  <Text>Disabled</Text>
+                </Button>
+              </Row>
+            </Col>
+            <Col style={styles.rightColumn}>
+              <Row style={styles.row}>
+                <Button large style={styles.eventButton}
                   onPress={(x) => this.scoreShip()}>
-                <Text>Ship</Text>
-              </Button>
-            </Row>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('scored_cargo')}>
-                <Text> Scored Cargo</Text>
-              </Button>
-            </Row>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('disabled')}>
-                <Text> Disabled </Text>
-              </Button>
-            </Row>
-          </Col>
-          <Col style={styles.rightColumn}>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('enter_et')}>
-                <Text>Entered Enemy Territory</Text>
-              </Button>
-            </Row>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('blocked')}>
-                <Text>Blocked Scoring</Text>
-              </Button>
-            </Row>
-            <Row>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('lifted_self')}>
-                <Text> Lifted Self </Text>
-              </Button>
-            </Row>
-            <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('lifted_team')}>
-                <Text>Lifted Teammate</Text>
-              </Button>
-            </Row>
-            <Row style={{height: 75}}></Row>
-          </Col>
-        </Grid>
-         {this.renderEvents()} 
-        <DetailModal 
-          show={this.state.showDialog}
-          onDone={this.dialogDone.bind(this)}
-          render={this.state.dialogContent}></DetailModal>
+                  <Text>Dropped Cargo</Text>
+                </Button>
+              </Row>
+              <Row style={styles.row}>
+                <Button large style={styles.eventButton}
+                  onPress={(x) => this.scoreShip()}>
+                  <Text>Entered OT</Text>
+                </Button>
+              </Row>
+            </Col>
+          </Grid>
+        </Content>
+        <Content>
+          {this.renderEvents()}
+          <DetailModal
+            show={this.state.showDialog}
+            onDone={this.dialogDone.bind(this)}
+            render={this.state.dialogContent}></DetailModal>
+        </Content>
       </Content>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  cardTitle: {
-    marginHorizontal: 10,
-    marginVertical: 5 
-  },
   eventButton: {
     margin: 5
   },
   row: {
     alignContent: 'center',
-    justifyContent: 'space-between',
-    borderWidth: 3,
-    borderColor: "darkgrey",
-    backgroundColor: "lightgrey",
-    borderRadius: 10,
-    margin: 3
+    justifyContent: 'space-around',
   },
   leftColumn: {
     marginHorizontal: 5,
   },
   rightColumn: {
     marginHorizontal: 5,
+    alignContent: 'flex-start'
   }
 })
