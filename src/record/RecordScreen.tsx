@@ -1,10 +1,20 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, Button, Container, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
+import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { EventPanel } from './EventPanel';
 
-export class RecordScreen extends React.Component<NavigationScreenProps> {
+type State = {
+  events: number[]
+}
+export class RecordScreen extends React.Component<NavigationScreenProps, State> {
+  constructor(props: NavigationScreenProps) {
+    super(props);
+    this.state = {
+      events: []
+    }
+  }
+
   static navigationOptions = ({navigation}:any) => ({
     header:
         <Header >
@@ -46,14 +56,6 @@ export class RecordScreen extends React.Component<NavigationScreenProps> {
           <Text>Time</Text>
           <Text>State</Text>
         </View>
-        <Button
-          onPress={this.save.bind(this)}>
-          <Text>Save</Text>
-        </Button>
-        <Button
-          onPress={this.cancel.bind(this)}>
-          <Text>Cancel</Text>
-        </Button>
         <EventPanel></EventPanel>
       </Container>
     );

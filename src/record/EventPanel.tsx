@@ -8,18 +8,6 @@ import {ActionSheet, Button, Body, Left, Card, CardItem, Col,
 import {AppRegistry, Image} from 'react-native';
 import DetailModal from './DetailModal';
 
-type Event = "got_hatch" 
-  | "got_cargo"
-  | "scored_hatch"
-  | "scored_cargo"
-  | "disabled"
-  | "restored"
-  | "enter_et"
-  | "leave_et"
-  | "blocked"
-  | "lifted_self"
-  | "lifted_team";
-
 const BUTTONS = [
   "Level 1",
   "Level 2",
@@ -92,15 +80,23 @@ export class EventPanel extends Component<Props, State> {
 
   render() {
     return (
-      <Container>
-        <Content>
+      <Content>
         <Grid>
           <Col style={styles.leftColumn}>
             <Row style={styles.row}>
-              <Button large style={styles.eventButton} 
-                  onPress={(x) => this.addEvent('got_hatch')}>
-                <Text> Got Hatch</Text>
-              </Button>
+              <View style={{flex: 1, flexDirection:"column"}}>
+                <Text style={styles.cardTitle}>Scored HATCH on</Text>
+                <View style={{flex: 1, flexDirection:"row"}}>
+                  <Button large style={styles.eventButton} 
+                      onPress={(x) => this.scoreRocket()}>
+                    <Text>Rocket</Text>
+                  </Button>
+                  <Button large style={styles.eventButton} 
+                      onPress={(x) => this.scoreShip()}>
+                    <Text>Ship</Text>
+                  </Button>
+                </View>
+              </View>
             </Row>
             <Row style={styles.row}>
               <Button large style={styles.eventButton} 
@@ -161,31 +157,36 @@ export class EventPanel extends Component<Props, State> {
           </Col>
         </Grid>
          {this.renderEvents()} 
-        </Content>
         <DetailModal 
           show={this.state.showDialog}
           onDone={this.dialogDone.bind(this)}
           render={this.state.dialogContent}></DetailModal>
-      </Container>
+      </Content>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  cardTitle: {
+    marginHorizontal: 10,
+    marginVertical: 5 
+  },
   eventButton: {
     margin: 5
   },
   row: {
     alignContent: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    borderWidth: 3,
+    borderColor: "darkgrey",
+    backgroundColor: "lightgrey",
+    borderRadius: 10,
+    margin: 3
   },
   leftColumn: {
     marginHorizontal: 5,
-    backgroundColor: 'lightgreen'
   },
   rightColumn: {
     marginHorizontal: 5,
-    alignItems: 'flex-end',
-    backgroundColor: 'yellow'
   }
 })
