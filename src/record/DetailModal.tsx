@@ -1,5 +1,6 @@
 import React, { Component, ReactPropTypes } from "react";
-import { Text, TouchableOpacity, View, GestureResponderEvent } from "react-native";
+import { View, GestureResponderEvent } from "react-native";
+import { Button, Text } from 'native-base';
 import Modal from "react-native-modal";
 
 type Props = {
@@ -28,9 +29,6 @@ export default class ModalTester extends Component<Props> {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: 'white'}}>
-        <TouchableOpacity onPress={this._toggleModal}>
-          <Text>Show Modal</Text>
-        </TouchableOpacity>
         <Modal style = {{ margin: 60 }}
             isVisible={!this.state.hardClose && this.props.show}
             useNativeDriver={true}
@@ -41,12 +39,12 @@ export default class ModalTester extends Component<Props> {
             >
           <View style={{ backgroundColor: 'white', flex: 1 }}>
             {this.props.render}
-            <TouchableOpacity onPress={(event) => {
+            <Button onPress={(event) => {
               this.setState({hardClose: true});
-              this.props.onDone(event);
+              this.props.onDone();
               }}>
-              <Text>Close!</Text>
-            </TouchableOpacity>
+              <Text>Cancel</Text>
+            </Button>
           </View>
         </Modal>
       </View>

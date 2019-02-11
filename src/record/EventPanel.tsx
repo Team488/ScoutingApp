@@ -20,15 +20,19 @@ const BUTTONS = [
 type State = {
   showDialog: boolean,
   dialogContent: JSX.Element
+  isDisabled: boolean,
+  inOpposingTerritory: boolean
 }
 
 interface Props {
-
+  onEvent: (event: number) => void
 }
 export class EventPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      isDisabled: true,
+      inOpposingTerritory: false,
       showDialog: false,
       dialogContent: <Text>Empty Dialog</Text>
     }
@@ -59,23 +63,91 @@ export class EventPanel extends Component<Props, State> {
     )
   }
 
-  scoreRocket() {
-    console.log('Score rocket');
+  scoreHatchRocket() {
     this.setState({
-      dialogContent: <Text>Which Rocket?</Text>,
+      dialogContent: (
+        <View>
+          <Text>Where on the ROCKET was the HATCH scored?</Text>
+          <Text>Front Rocket</Text>
+          <Button onPress={() => this.dialogDone(25)}>
+            <Text>Bottom</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(27)}>
+            <Text>Middle</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(29)}>
+            <Text>Top</Text>
+          </Button>
+          <Text>Back Rocket</Text>
+          <Button onPress={() => this.dialogDone(24)}>
+            <Text>Bottom</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(26)}>
+            <Text>Middle</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(28)}>
+            <Text>Top</Text>
+          </Button>
+        </View>),
       showDialog: true
     });
   }
 
-  scoreShip() {
-    console.log('Score ship');
+  scoreHatchShip() {
     this.setState({
-      dialogContent: <Text>Which Ship?</Text>,
+      dialogContent: (
+        <View>
+          <Text>Where on the SHIP was the HATCH scored?</Text>
+          <Button onPress={() => this.dialogDone(23)}>
+            <Text>Side</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(22)}>
+            <Text>Front</Text>
+          </Button>
+        </View>),
       showDialog: true
     });
   }
 
-  dialogDone() {
+  scoreCargoRocket() {
+    this.setState({
+      dialogContent: (
+        <View>
+          <Text>Where on the ROCKET was the CARGO scored?</Text>
+          <Button onPress={() => this.dialogDone(46)}>
+            <Text>Top</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(45)}>
+            <Text>Middle</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(44)}>
+            <Text>Bottom</Text>
+          </Button>
+        </View>),
+      showDialog: true
+    });
+  }
+
+  scoreCargoShip() {
+    this.setState({
+      dialogContent: (
+        <View>
+          <Text>Where on the SHIP was the CARGO scored?</Text>
+          <Button onPress={() => this.dialogDone(43)}>
+            <Text>Side</Text>
+          </Button>
+          <Button onPress={() => this.dialogDone(42)}>
+            <Text>Front</Text>
+          </Button>
+        </View>),
+      showDialog: true
+    });
+  }
+
+  dialogDone(event?: number) {
+    if (event != undefined) {
+      this.props.onEvent(event);
+    }
     this.setState({
       showDialog: false
     })
@@ -90,11 +162,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "lightyellow" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreRocket()}>
+                    onPress={(x) => this.scoreHatchRocket()}>
                     <Text>Rocket</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreShip()}>
+                    onPress={(x) => this.scoreHatchShip()}>
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
@@ -102,11 +174,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "lightyellow" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreRocket()}>
+                    onPress={(x) => this.props.onEvent(20)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreShip()}>
+                    onPress={(x) => this.props.onEvent(21)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -116,11 +188,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "lightblue" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreRocket()}>
+                    onPress={(x) => this.scoreCargoRocket()}>
                     <Text>Rocket</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreShip()}>
+                    onPress={(x) => this.scoreCargoShip()}>
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
@@ -128,11 +200,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "lightblue" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreRocket()}>
+                    onPress={(x) => this.props.onEvent(40)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreShip()}>
+                    onPress={(x) => this.props.onEvent(41)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -145,13 +217,13 @@ export class EventPanel extends Component<Props, State> {
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.scoreRocket()}>
+                  onPress={(x) => this.props.onEvent(2)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
               </Row>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.scoreRocket()}>
+                  onPress={(x) => this.props.onEvent(5)}>
                   <Text>Disabled</Text>
                 </Button>
               </Row>
@@ -159,13 +231,13 @@ export class EventPanel extends Component<Props, State> {
             <Col style={styles.rightColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.scoreShip()}>
+                  onPress={(x) => this.props.onEvent(3)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
               </Row>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.scoreShip()}>
+                  onPress={(x) => this.props.onEvent(1)}>
                   <Text>Entered OT</Text>
                 </Button>
               </Row>

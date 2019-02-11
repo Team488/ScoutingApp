@@ -3,11 +3,14 @@ import { StyleSheet } from 'react-native';
 import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { EventPanel } from './EventPanel';
+import { EventList, MatchEvent } from './EventList';
 
 type State = {
-  events: number[]
+  events: MatchEvent[]
 }
 export class RecordScreen extends React.Component<NavigationScreenProps, State> {
+  private nextEventID = 0;
+
   constructor(props: NavigationScreenProps) {
     super(props);
     this.state = {
@@ -47,6 +50,23 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     this.props.navigation.pop();
   }
 
+
+  newEvent(e: number) {
+    const newEvent = {
+      code: e,
+      id: this.nextEventID++
+    }
+    this.setState({
+      events: [newEvent].concat(this.state.events)
+    });
+  }
+
+  deleteEvent(id: number) {
+    this.setState({
+      events: this.state.events.filter((x) => x.id !== id)
+    });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -56,7 +76,8 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
           <Text>Time</Text>
           <Text>State</Text>
         </View>
-        <EventPanel></EventPanel>
+        <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
+        <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
       </Container>
     );
   }
