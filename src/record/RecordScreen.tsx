@@ -78,6 +78,11 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
         </View>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
+        <View>
+          <Button><Icon name="play"></Icon></Button>
+          <Button><Icon name="pause"></Icon></Button>
+          <Button><Icon name="reload"></Icon></Button>
+        </View>
       </Container>
     );
   }

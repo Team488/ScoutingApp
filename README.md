@@ -7,6 +7,11 @@ Start the app with
     react-native run-android
 
 This will install the dev version of the app on any connected device or simulator.
+With the app running, you can run 
+
+    adb shell input keyevent 82
+
+to open the context menu. This will let you reload or start JS debugging.
 
 # Building the release apk
 
@@ -33,11 +38,10 @@ If you already have the dev version of the app installed, you might need to unin
 
 # TODO
 
-- add events to log
-- scoring modal
-- debounce button inputs
 - timer component
-- delete events with confirm
+- style scoring modal
+- debounce button inputs
+- add confirmation to delete events
 - add option for lifted events
 - screen that shows event log as qr code
 - screen that shows summary as qr code

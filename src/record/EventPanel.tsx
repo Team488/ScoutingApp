@@ -67,26 +67,26 @@ export class EventPanel extends Component<Props, State> {
     this.setState({
       dialogContent: (
         <View>
-          <Text>Where on the ROCKET was the HATCH scored?</Text>
-          <Text>Front Rocket</Text>
+          <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
+          <Text>Front Side of Rocket</Text>
           <Button onPress={() => this.dialogDone(25)}>
-            <Text>Bottom</Text>
+            <Text>Front Bottom</Text>
           </Button>
           <Button onPress={() => this.dialogDone(27)}>
-            <Text>Middle</Text>
+            <Text>Front Middle</Text>
           </Button>
           <Button onPress={() => this.dialogDone(29)}>
-            <Text>Top</Text>
+            <Text>Front Top</Text>
           </Button>
-          <Text>Back Rocket</Text>
+          <Text>Back Side of Rocket</Text>
           <Button onPress={() => this.dialogDone(24)}>
-            <Text>Bottom</Text>
+            <Text>Back Bottom</Text>
           </Button>
           <Button onPress={() => this.dialogDone(26)}>
-            <Text>Middle</Text>
+            <Text>Back Middle</Text>
           </Button>
           <Button onPress={() => this.dialogDone(28)}>
-            <Text>Top</Text>
+            <Text>Back Top</Text>
           </Button>
         </View>),
       showDialog: true

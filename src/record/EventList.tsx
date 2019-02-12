@@ -1,5 +1,5 @@
 import React, { Component, ReactPropTypes } from "react";
-import { Text, TouchableOpacity, View, GestureResponderEvent } from "react-native";
+import { Text, TouchableOpacity, View, GestureResponderEvent, StyleSheet } from "react-native";
 import { Button, Content, Icon, Left, List, ListItem, Right } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from "react-native-modal";
@@ -26,7 +26,7 @@ export class EventList extends Component<Props> {
 
   private createList() {
     if (!this.props.events || this.props.events.length == 0) {
-      return (<Text>No events yet!</Text>)
+      return (<Text style={styles.placeholder}>No events yet!</Text>)
     }
     return this.props.events.map((e: MatchEvent) => {
       return (<ListItem key={e.id}>
@@ -42,7 +42,7 @@ export class EventList extends Component<Props> {
 
   render() {
     return (
-      <Content style={{ marginHorizontal: 10, marginVertical: 5 }}>
+      <Content style={styles.container}>
         <List>
           {this.createList()}
         </List>
@@ -50,3 +50,17 @@ export class EventList extends Component<Props> {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    padding: 3,
+    borderColor: "darkgrey",
+    borderWidth: 2
+  },
+  placeholder: {
+    alignSelf: "center",
+    marginTop: 10
+  }
+});
