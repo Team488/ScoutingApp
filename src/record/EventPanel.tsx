@@ -63,32 +63,61 @@ export class EventPanel extends Component<Props, State> {
     )
   }
 
+  /**
+   * This is an example of a relatively complex dialog. We could customize this and
+   * add some icons, or even pictures of the rocket and ship to indicate location.
+   * Right now, it's just a panel with sizx buttons.
+   */
   scoreHatchRocket() {
     this.setState({
       dialogContent: (
-        <View>
-          <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
-          <Text>Front Side of Rocket</Text>
-          <Button onPress={() => this.dialogDone(25)}>
-            <Text>Front Bottom</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(27)}>
-            <Text>Front Middle</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(29)}>
-            <Text>Front Top</Text>
-          </Button>
-          <Text>Back Side of Rocket</Text>
-          <Button onPress={() => this.dialogDone(24)}>
-            <Text>Back Bottom</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(26)}>
-            <Text>Back Middle</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(28)}>
-            <Text>Back Top</Text>
-          </Button>
-        </View>),
+        <Content style={{ margin: 10, padding: 10 }}>
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+              <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
+            </View>
+          <Grid>
+            <Col>
+              <Row>
+                <Text>BACK</Text>
+              </Row>
+              <Row>
+                <Button large onPress={() => this.dialogDone(28)}>
+                  <Text>Back Top</Text>
+                </Button>
+              </Row>
+              <Row>
+                <Button large onPress={() => this.dialogDone(26)}>
+                  <Text>Back Middle</Text>
+                </Button>
+              </Row>
+              <Row>
+                <Button large onPress={() => this.dialogDone(24)}>
+                  <Text>Back Bottom</Text>
+                </Button>
+              </Row>
+            </Col>
+            <Col>
+              <Row style={{margin:5}}>
+                <Text>FRONT</Text>
+              </Row>
+              <Row style={{margin:5}}>
+                <Button large onPress={() => this.dialogDone(29)}>
+                  <Text>Front Top</Text>
+                </Button>
+              </Row>
+              <Row style={{margin:5}}>
+                <Button large onPress={() => this.dialogDone(27)}>
+                  <Text>Front Middle</Text>
+                </Button>
+              </Row>
+              <Row style={{margin:5}}>
+                <Button large onPress={() => this.dialogDone(25)}>
+                  <Text>Front Bottom</Text>
+                </Button>
+              </Row>
+            </Col>
+          </Grid>
+        </Content>),
       showDialog: true
     });
   }
@@ -96,7 +125,7 @@ export class EventPanel extends Component<Props, State> {
   scoreHatchShip() {
     this.setState({
       dialogContent: (
-        <View>
+        <Content>
           <Text>Where on the SHIP was the HATCH scored?</Text>
           <Button onPress={() => this.dialogDone(23)}>
             <Text>Side</Text>
@@ -104,7 +133,7 @@ export class EventPanel extends Component<Props, State> {
           <Button onPress={() => this.dialogDone(22)}>
             <Text>Front</Text>
           </Button>
-        </View>),
+        </Content>),
       showDialog: true
     });
   }
@@ -112,7 +141,7 @@ export class EventPanel extends Component<Props, State> {
   scoreCargoRocket() {
     this.setState({
       dialogContent: (
-        <View>
+        <Content>
           <Text>Where on the ROCKET was the CARGO scored?</Text>
           <Button onPress={() => this.dialogDone(46)}>
             <Text>Top</Text>
@@ -123,7 +152,7 @@ export class EventPanel extends Component<Props, State> {
           <Button onPress={() => this.dialogDone(44)}>
             <Text>Bottom</Text>
           </Button>
-        </View>),
+        </Content>),
       showDialog: true
     });
   }
@@ -131,7 +160,7 @@ export class EventPanel extends Component<Props, State> {
   scoreCargoShip() {
     this.setState({
       dialogContent: (
-        <View>
+        <Content>
           <Text>Where on the SHIP was the CARGO scored?</Text>
           <Button onPress={() => this.dialogDone(43)}>
             <Text>Side</Text>
@@ -139,7 +168,7 @@ export class EventPanel extends Component<Props, State> {
           <Button onPress={() => this.dialogDone(42)}>
             <Text>Front</Text>
           </Button>
-        </View>),
+        </Content>),
       showDialog: true
     });
   }
@@ -155,8 +184,8 @@ export class EventPanel extends Component<Props, State> {
 
   render() {
     return (
-      <Content>
-        <Content>
+      <View>
+        <View>
           <Grid>
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
@@ -211,8 +240,8 @@ export class EventPanel extends Component<Props, State> {
               </Row>
             </Col>
           </Grid>
-        </Content>
-        <Content>
+        </View>
+        <View>
           <Grid>
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
@@ -243,15 +272,15 @@ export class EventPanel extends Component<Props, State> {
               </Row>
             </Col>
           </Grid>
-        </Content>
-        <Content>
+        </View>
+        <View>
           {this.renderEvents()}
           <DetailModal
             show={this.state.showDialog}
             onDone={this.dialogDone.bind(this)}
             render={this.state.dialogContent}></DetailModal>
-        </Content>
-      </Content>
+        </View>
+      </View>
     )
   }
 }

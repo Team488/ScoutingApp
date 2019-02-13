@@ -4,6 +4,7 @@ import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Tex
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { EventPanel } from './EventPanel';
 import { EventList, MatchEvent } from './EventList';
+import { StatusBar } from './StatusBar';
 
 type State = {
   events: MatchEvent[]
@@ -70,20 +71,16 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <Container>
-        <View style={styles.statusBar}>
-          <Text>Score</Text>
-          <Text>Time</Text>
-          <Text>State</Text>
-        </View>
+      <Content>
+        <StatusBar></StatusBar>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
-        <View>
+        {/* <View>
           <Button><Icon name="play"></Icon></Button>
           <Button><Icon name="pause"></Icon></Button>
           <Button><Icon name="reload"></Icon></Button>
-        </View>
-      </Container>
+        </View> */}
+      </Content>
     );
   }
 }
