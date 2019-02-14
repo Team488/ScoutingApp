@@ -36,7 +36,7 @@ export class EventPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isDisabled: true,
+      isDisabled: false,
       inOpposingTerritory: false,
       showDialog: false,
       dialogContent: <Text>Empty Dialog</Text>
@@ -44,7 +44,7 @@ export class EventPanel extends Component<Props, State> {
   }
 
   emitEvent(event: number) {
-    this.props.onEvent({timestamp: Date.now(), code: event})
+    this.props.onEvent({ timestamp: Date.now(), code: event })
   }
 
   addEvent(x: Event) {
@@ -73,6 +73,44 @@ export class EventPanel extends Component<Props, State> {
     )
   }
 
+  renderDisabledButton() {
+    if (this.state.isDisabled) {
+      return (<Button large style={styles.eventButton}
+        onPress={(x) => {
+          this.setState({ isDisabled: false });
+          this.emitEvent(6);
+        }}>
+        <Text>Restored</Text>
+      </Button>)
+    }
+    return (<Button large style={styles.eventButton}
+      onPress={(x) => {
+        this.setState({ isDisabled: true });
+        this.emitEvent(5);
+      }}>
+      <Text>Disabled</Text>
+    </Button>)
+  }
+
+  renderOTButton() {
+    if (this.state.inOpposingTerritory) {
+      return (<Button large style={styles.eventButton}
+        onPress={(x) => {
+          this.setState({ inOpposingTerritory: false });
+          this.emitEvent(4);
+        }}>
+        <Text>Left OT</Text>
+      </Button>)
+    }
+    return (<Button large style={styles.eventButton}
+      onPress={(x) => {
+        this.setState({ inOpposingTerritory: true });
+        this.emitEvent(1);
+      }}>
+      <Text>Entered OT</Text>
+    </Button>)
+  }
+
   /**
    * This is an example of a relatively complex dialog. We could customize this and
    * add some icons, or even pictures of the rocket and ship to indicate location.
@@ -83,9 +121,9 @@ export class EventPanel extends Component<Props, State> {
     this.setState({
       dialogContent: (
         <Content style={{ margin: 10, padding: 10 }}>
-            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
-              <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
-            </View>
+          <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+            <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
+          </View>
           <Grid>
             <Col>
               <Row>
@@ -108,20 +146,20 @@ export class EventPanel extends Component<Props, State> {
               </Row>
             </Col>
             <Col>
-              <Row style={{margin:5}}>
+              <Row style={{ margin: 5 }}>
                 <Text>FRONT</Text>
               </Row>
-              <Row style={{margin:5}}>
+              <Row style={{ margin: 5 }}>
                 <Button large onPress={() => this.dialogDone(29)}>
                   <Text>Front Top</Text>
                 </Button>
               </Row>
-              <Row style={{margin:5}}>
+              <Row style={{ margin: 5 }}>
                 <Button large onPress={() => this.dialogDone(27)}>
                   <Text>Front Middle</Text>
                 </Button>
               </Row>
-              <Row style={{margin:5}}>
+              <Row style={{ margin: 5 }}>
                 <Button large onPress={() => this.dialogDone(25)}>
                   <Text>Front Bottom</Text>
                 </Button>
@@ -262,10 +300,7 @@ export class EventPanel extends Component<Props, State> {
                 </Button>
               </Row>
               <Row style={styles.row}>
-                <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(5)}>
-                  <Text>Disabled</Text>
-                </Button>
+                {this.renderDisabledButton()}
               </Row>
             </Col>
             <Col style={styles.rightColumn}>
@@ -276,16 +311,12 @@ export class EventPanel extends Component<Props, State> {
                 </Button>
               </Row>
               <Row style={styles.row}>
-                <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(1)}>
-                  <Text>Entered OT</Text>
-                </Button>
+                {this.renderOTButton()}
               </Row>
             </Col>
           </Grid>
         </View>
         <View>
-          {this.renderEvents()}
           <DetailModal
             show={this.state.showDialog}
             onDone={this.dialogDone.bind(this)}
