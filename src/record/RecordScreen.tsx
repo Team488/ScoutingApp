@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-import { EventPanel } from './EventPanel';
+import { EventPanel, TimedEvent } from './EventPanel';
 import { EventList, MatchEvent } from './EventList';
 import { StatusBar } from './StatusBar';
 
@@ -11,6 +11,7 @@ type State = {
 }
 export class RecordScreen extends React.Component<NavigationScreenProps, State> {
   private nextEventID = 0;
+  matchStart = 0;
 
   constructor(props: NavigationScreenProps) {
     super(props);
@@ -40,10 +41,12 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
 
   componentDidMount() {
     this.props.navigation.setParams({ handleSave: this.save.bind(this)});
+    // TODO: Pass match start time to children 
+    this.matchStart = Date.now();
   }
 
   save() {
-    this.props.navigation.replace('Review');
+    this.props.navigation.replace('Review', {events: this.state.events, matchStart: this.matchStart});
   }
 
   // Drop any in-progress recording and go back to start.
@@ -51,10 +54,9 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     this.props.navigation.pop();
   }
 
-
-  newEvent(e: number) {
+  newEvent(event: TimedEvent) {
     const newEvent = {
-      code: e,
+      ...event,
       id: this.nextEventID++
     }
     this.setState({
@@ -72,14 +74,9 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <StatusBar></StatusBar>
+        <StatusBar title="test"></StatusBar>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
-        {/* <View>
-          <Button><Icon name="play"></Icon></Button>
-          <Button><Icon name="pause"></Icon></Button>
-          <Button><Icon name="reload"></Icon></Button>
-        </View> */}
       </Content>
     );
   }

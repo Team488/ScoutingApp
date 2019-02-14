@@ -10,11 +10,37 @@ import {
 import { AppRegistry, Image } from 'react-native';
 import DetailModal from './DetailModal';
 
+type State = {
+  time: number
+}
+
 type Props = {
   title: string,
   style?: ViewStyle
 }
-export class StatusBar extends Component<Props> {
+export class StatusBar extends Component<Props, State> {
+  private start: number = 0;
+  private timer: NodeJS.Timer|null = null;
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      time:0
+    }
+  }
+
+  componentDidMount() {
+    this.start = Date.now();
+    this.timer = setInterval(() => {
+      this.setState({
+        time: (Date.now() - this.start)/1000
+      })
+    }, 100);
+  }
+  
+  componentWillUnmount() {
+    clearInterval(this.timer!);
+  }
+
   render() {
     return (
       <View style={{flex:1, flexDirection: "row", margin: 5}}>
@@ -23,10 +49,7 @@ export class StatusBar extends Component<Props> {
           <Text>Cargo:</Text>
         </View>
         <View style={{flex:1, flexDirection: "column"}}>
-          <Text> TELEOP </Text>
-        </View>
-        <View style={{flex:1, flexDirection: "column"}}>
-          <Text>Timer</Text>
+          <Text>{this.state.time.toFixed(2)}</Text>
         </View>
       </View>)
   }

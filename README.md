@@ -38,8 +38,6 @@ If you already have the dev version of the app installed, you might need to unin
 
 # TODO
 
-- timer component
-- style scoring modal
 - debounce button inputs
 - add confirmation to delete events
 - add option for lifted events

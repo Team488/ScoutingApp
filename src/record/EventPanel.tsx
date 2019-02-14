@@ -17,6 +17,11 @@ const BUTTONS = [
   "Level 3"
 ]
 
+export interface TimedEvent {
+  timestamp: number,
+  code: number
+}
+
 type State = {
   showDialog: boolean,
   dialogContent: JSX.Element
@@ -25,7 +30,7 @@ type State = {
 }
 
 interface Props {
-  onEvent: (event: number) => void
+  onEvent: (event: TimedEvent) => void
 }
 export class EventPanel extends Component<Props, State> {
   constructor(props: Props) {
@@ -37,6 +42,11 @@ export class EventPanel extends Component<Props, State> {
       dialogContent: <Text>Empty Dialog</Text>
     }
   }
+
+  emitEvent(event: number) {
+    this.props.onEvent({timestamp: Date.now(), code: event})
+  }
+
   addEvent(x: Event) {
     Vibration.vibrate(2000, false);
     console.log('Got event ', x);
@@ -69,6 +79,7 @@ export class EventPanel extends Component<Props, State> {
    * Right now, it's just a panel with sizx buttons.
    */
   scoreHatchRocket() {
+    // TODO: Capture the timestamp before opening the dialog
     this.setState({
       dialogContent: (
         <Content style={{ margin: 10, padding: 10 }}>
@@ -175,7 +186,7 @@ export class EventPanel extends Component<Props, State> {
 
   dialogDone(event?: number) {
     if (event != undefined) {
-      this.props.onEvent(event);
+      this.emitEvent(event);
     }
     this.setState({
       showDialog: false
@@ -203,11 +214,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "lightyellow" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.props.onEvent(20)}>
+                    onPress={(x) => this.emitEvent(20)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.props.onEvent(21)}>
+                    onPress={(x) => this.emitEvent(21)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -229,11 +240,11 @@ export class EventPanel extends Component<Props, State> {
               <Row style={styles.row}>
                 <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "lightblue" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.props.onEvent(40)}>
+                    onPress={(x) => this.emitEvent(40)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.props.onEvent(41)}>
+                    onPress={(x) => this.emitEvent(41)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -246,13 +257,13 @@ export class EventPanel extends Component<Props, State> {
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.props.onEvent(2)}>
+                  onPress={(x) => this.emitEvent(2)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
               </Row>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.props.onEvent(5)}>
+                  onPress={(x) => this.emitEvent(5)}>
                   <Text>Disabled</Text>
                 </Button>
               </Row>
@@ -260,13 +271,13 @@ export class EventPanel extends Component<Props, State> {
             <Col style={styles.rightColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.props.onEvent(3)}>
+                  onPress={(x) => this.emitEvent(3)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
               </Row>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.props.onEvent(1)}>
+                  onPress={(x) => this.emitEvent(1)}>
                   <Text>Entered OT</Text>
                 </Button>
               </Row>

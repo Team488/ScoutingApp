@@ -16,6 +16,7 @@ type Props = {
   onDeleteEvent: (id: number) => void
 }
 export class EventList extends Component<Props> {
+  start = -1;
   constructor(props: any) {
     super(props);
   }
@@ -24,15 +25,21 @@ export class EventList extends Component<Props> {
     hardClose: false
   };
 
+  componentWillMount() {
+    this.start = Date.now();
+  }
+
   private createList() {
     if (!this.props.events || this.props.events.length == 0) {
       return (<Text style={styles.placeholder}>No events yet!</Text>)
     }
     return this.props.events.map((e: MatchEvent) => {
+      const time = (e.timestamp! - this.start)/1000
       return (<ListItem key={e.id}>
         <Left>
-          <Text>{EventTypes[e.code].description}</Text>
+          <Text>{time.toFixed(1)}</Text>
         </Left>
+          <Text>{EventTypes[e.code].description}</Text>
         <Right>
           <Button onPress={(event) => this.props.onDeleteEvent(e.id)} icon small><Icon name='beer' /></Button>
         </Right>
