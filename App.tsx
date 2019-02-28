@@ -11,12 +11,14 @@ import { HomeScreen } from './src/home/HomeScreen';
 import { StartScreen } from './src/start/StartScreen';
 import { RecordScreen } from './src/record/RecordScreen';
 import { ReviewScreen } from './src/review/ReviewScreen';
+import { LoadMatchScreen } from './src/load_match/LoadMatchScreen';
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Start: StartScreen,
   Record: RecordScreen,
-  Review: ReviewScreen
+  Review: ReviewScreen,
+  LoadMatch: LoadMatchScreen
 },
   {
     initialRouteName: "Home"

@@ -1,6 +1,6 @@
 # Getting started
 
-Follow the instructions here to install Android Studio and React Native.
+Follow the instructions [here]() to install Android Studio and React Native.
 
 Start the app with 
 
@@ -35,6 +35,16 @@ If you already have the dev version of the app installed, you might need to unin
 
     cd android 
     ./gradlew uninstallRelease
+
+# Loading match data
+
+Create a match list with the time and a the team list in a CSV:
+
+    Time, Red 1,Red 2,Red 3,Blue 1,Blue 2,Blue 3
+
+Use the QR Code generator here: https://keremerkan.net/qr-code-and-2d-code-generator/
+
+Go to Settings > Load Match and scan the code to load match data for each tablet.
 
 # TODO
 
