@@ -9,16 +9,13 @@ export class HomeScreen extends React.Component<NavigationScreenProps> {
     const { navigate } = this.props.navigation;
     return (
       <Content>
-              <Text>Home Screen</Text>
+
+        <Text>Home Screen</Text>
+        <Text>Loading match data</Text>
         <Button
           onPress={() => navigate('Start')}
         >
           <Text>Record a match</Text>
-        </Button>
-        <Button
-          onPress={() => navigate('LoadMatch')}
-        >
-          <Text>Load Match Data</Text>
         </Button>
       </Content>
     );
