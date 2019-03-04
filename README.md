@@ -48,8 +48,7 @@ Go to Settings > Load Match and scan the code to load match data for each tablet
 
 # TODO
 
-- Set which position the tablet is for and surface that in the header 
-- 
+- Automatically pick the next event, but allow choosing a different one
 - debounce button inputs
 - add confirmation to delete events
 - add option for lifted events

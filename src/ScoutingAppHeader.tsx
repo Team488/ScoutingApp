@@ -12,19 +12,25 @@ interface Stores {
 type HeaderProps = {
   title: string,
   navigation: any,
-  showBack: boolean
+  hideBack?: boolean
 }
 
 @connect("matchList")
 @observer
 export class ScoutingAppHeader extends ConnectedComponent<HeaderProps, Stores> {
-  render() {
-    return <Header style={{backgroundColor: this.stores.matchList.positionColor}}>
-    <Left>
-      <Button transparent
+  renderBack() {
+    if (!this.props.hideBack) {
+      return <Button transparent
         onPress={() => this.props.navigation.goBack()}>
         <Icon name='arrow-back' />
       </Button>
+    }
+  }
+
+  render() {
+    return <Header style={{backgroundColor: this.stores.matchList.positionColor}}>
+    <Left>
+      {this.renderBack()}
     </Left>
     <Body>
       <Title>{this.props.title} - {this.stores.matchList.position}</Title>

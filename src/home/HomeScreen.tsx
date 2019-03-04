@@ -16,7 +16,10 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
   static navigationOptions = ({navigation}:any) => {
     console.log(navigation);
     return {
-      header: <ScoutingAppHeader navigation={navigation} title="Scouting App"></ScoutingAppHeader>
+      header: <ScoutingAppHeader
+                hideBack={true}
+                navigation={navigation}
+                title="Scouting App"></ScoutingAppHeader>
     }
   }
 

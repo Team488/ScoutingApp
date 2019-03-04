@@ -23,7 +23,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
 
   static navigationOptions = ({navigation}:any) => ({
     header:
-      <ScoutingAppHeader title="Recording Match">
+      <ScoutingAppHeader navigation={navigation} title="Recording Match">
         <Button onPress={() => navigation.state.params.handleSave()}>
           <Text>Finish</Text>
         </Button>
