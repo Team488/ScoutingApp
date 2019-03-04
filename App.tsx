@@ -12,15 +12,16 @@ import { HomeScreen } from './src/home/HomeScreen';
 import { StartScreen } from './src/start/StartScreen';
 import { RecordScreen } from './src/record/RecordScreen';
 import { ReviewScreen } from './src/review/ReviewScreen';
-import { LoadMatchScreen } from './src/load_match/LoadMatchScreen';
-import { MatchList } from './src/MatchList';
+import { SettingsScreen } from './src/settings/SettingsScreen';
+import { MatchList } from './src/store';
+import { PermissionsAndroid } from 'react-native';
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Start: StartScreen,
   Record: RecordScreen,
   Review: ReviewScreen,
-  LoadMatch: LoadMatchScreen
+  Settings: SettingsScreen, 
 },
   {
     initialRouteName: "Home"
@@ -32,6 +33,29 @@ type Stores = {
   matchList?: MatchList
 }
 
+// We need the external storage permission so we can read/write match
+// data from the SD card.
+async function requestFilePermission() {
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      {
+        title: 'External storage permission',
+        message:
+          'ScoutingApp needs to access external storage' +
+          'to save and read data.'
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('External storage granted');
+    } else {
+      console.log('External permission denied');
+    }
+  } catch (err) {
+    console.warn(err);
+  }
+}
+
 export default class App extends React.Component {
   stores: Stores = {};
   matchList: MatchList;
@@ -39,13 +63,12 @@ export default class App extends React.Component {
   constructor(props: any) {
     super(props);
 
-    //this.stores.matchList = new MatchList();
-    //this.stores.matchList.loadData();
     this.matchList = new MatchList();
     this.matchList.loadData();
   }
 
   componentDidMount() {
+    requestFilePermission();
     if (Orientation) {
       Orientation.lockToPortrait();
     } else {

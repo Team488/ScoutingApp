@@ -5,6 +5,7 @@ import { NavigationActions, NavigationScreenProps, createStackNavigator, createA
 import { EventPanel, TimedEvent } from './EventPanel';
 import { EventList, MatchEvent } from './EventList';
 import { StatusBar } from './StatusBar';
+import { ScoutingAppHeader } from '../ScoutingAppHeader';
 
 type State = {
   events: MatchEvent[]
@@ -22,21 +23,11 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
 
   static navigationOptions = ({navigation}:any) => ({
     header:
-        <Header >
-          <Left>
-            <Button transparent
-              onPress={() => navigation.goBack()}>
-              <Icon name='arrow-back' />
-            </Button>
-          </Left>
-          <Body>
-            <Title>Recording Match</Title>
-          </Body>
-          <Right>
-            <Button onPress={() => navigation.state.params.handleSave()}>
-            <Text>Finish</Text></Button>
-          </Right>
-        </Header>
+      <ScoutingAppHeader title="Recording Match">
+        <Button onPress={() => navigation.state.params.handleSave()}>
+          <Text>Finish</Text>
+        </Button>
+      </ScoutingAppHeader>
   })
 
   componentDidMount() {

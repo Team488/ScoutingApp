@@ -1,42 +1,59 @@
-import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Button, Content, Grid, Row, Col, Text } from 'native-base';
+import React from 'react';
+import RN, { View } from 'react-native';
+import { Button, Body, Content, Grid, Icon, Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import { inject, observer } from 'mobx-react';
-import { MatchList } from '../MatchList';
+import { connect, ConnectedComponent, MatchList } from '../store';
+import { ScoutingAppHeader } from '../ScoutingAppHeader';
 
-interface RootStore {
+interface Stores {
   matchList: MatchList;
 }
 
-@observer
-export class ConnectedComponent<T, S, X = {}> extends Component<T, X> {
-  public get stores() {
-    return (this.props as any) as S;
-  }
-}
-
-export const connect = (...args: Array<keyof RootStore>) => inject(...args);
-
 @connect("matchList")
-export class HomeScreen extends ConnectedComponent<NavigationScreenProps, RootStore> {
+@observer
+export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores> {
+  static navigationOptions = ({navigation}:any) => {
+    console.log(navigation);
+    return {
+      header: <ScoutingAppHeader navigation={navigation} title="Scouting App"></ScoutingAppHeader>
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <Content>
-
-        <Text>Home Screen</Text>
-        <Text>Next match: {this.stores.matchList.matchTime}</Text>
-        <Button
-          onPress={() => navigate('Start')}
-        >
-          <Text>Record a match</Text>
-        </Button>
-        <Button onPress={() => this.stores.matchList.update()}>
-          <Text>Confabulate</Text>
-        </Button>
+        <Grid>
+          <Col>
+            <Row>
+              <Text>Home Screen { this.stores.matchList.position}</Text>
+            </Row><Row>
+              {/* <Text>Next match: {this.stores.matchList.nextMatch}</Text> */}
+              <NextMatch nextMatch={this.stores.matchList.nextMatch}></NextMatch>
+            </Row><Row>
+              <Button
+                onPress={() => navigate('Start')}
+              >
+                <Text>Record a match</Text>
+              </Button>
+            </Row><Row>
+              <Button onPress={() => navigate("Settings")}>
+                <Text>Settings</Text>
+              </Button>
+            </Row>
+          </Col>
+        </Grid>
       </Content>
     );
+  }
+}
+
+type Props = {
+  nextMatch: string
+}
+class NextMatch extends React.Component<Props> {
+  render() {
+    return <Text>The next match is at: {this.props.nextMatch}</Text>
   }
 }

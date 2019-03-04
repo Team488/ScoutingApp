@@ -48,11 +48,11 @@ Go to Settings > Load Match and scan the code to load match data for each tablet
 
 # TODO
 
+- Set which position the tablet is for and surface that in the header 
+- 
 - debounce button inputs
 - add confirmation to delete events
 - add option for lifted events
-- screen that shows event log as qr code
-- screen that shows summary as qr code
 - alter back button behavior
     - Use https://github.com/vonovak/react-navigation-backhandler for example
 

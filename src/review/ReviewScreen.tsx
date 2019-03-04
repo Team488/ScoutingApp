@@ -11,9 +11,10 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
   constructor(props: any) {
     super(props);
     this.state = {
-      eventData: "1"
+      eventData: '%'
     }
   }
+
   componentDidMount() {
     console.log(this.props.navigation.getParam('events'))
     const start = this.props.navigation.getParam('matchStart') as number;
@@ -26,7 +27,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
         // Timestamp is in tenths of a second
         return `${((e.timestamp! - start)/100).toFixed(0)} ${e.code}`;
       })
-      .join('$');
+      .join('$') + '%';
     this.setState({
       eventData
     })
