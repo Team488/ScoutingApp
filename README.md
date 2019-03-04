@@ -48,7 +48,11 @@ Go to Settings > Load Match and scan the code to load match data for each tablet
 
 # TODO
 
-- Automatically pick the next event, but allow choosing a different one
+- wire match and team into output
+- create sandstorm panel
+- Add undo/redo button?
+- Convert eventList to flatlist, or at least to a fixed list
+
 - debounce button inputs
 - add confirmation to delete events
 - add option for lifted events

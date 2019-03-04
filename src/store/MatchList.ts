@@ -33,8 +33,22 @@ export class MatchList {
   @observable matches: Match[] = [];
   @observable matchTime = '3:00pm'
 
+  isXbotMatch(match: Match): boolean {
+    return match.red1 == 488 ||
+      match.red2 == 488  ||
+      match.red3 == 488  ||
+      match.blue1 == 488  ||
+      match.blue2 == 488  ||
+      match.blue3 == 488;
+  }
+
   @computed get nextMatch() {
-    return this.matchTime;
+    const now = new Date();
+    for(let i = 0; i < this.matches.length; i++) {
+      if(this.matches[i].time > now && this.isXbotMatch(this.matches[i])) {
+        return this.matches[i];
+      }
+    }
   }
 
   @action updatePosition(newPos: Position) {
@@ -50,33 +64,26 @@ export class MatchList {
     }
   }
 
-  @action update() {
-    this.matchTime = `${Math.floor(Math.random()*10)}:00pm`;
-    console.log('Setting new time: ', this.matchTime);
-  }
-
   async loadData() {
     const list = await RNFS.readDir(RNFS.ExternalCachesDirectoryPath);
     console.log(list);
     const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/sample_match_list.csv');
     const rows = rawData.trim().split('\n');
     const headers = rows[0].split(',');
-    const data = rows.slice(1).map(r => {
+    this.matches = rows.slice(1).map(r => {
       const item = r.split(',')
 
       return {
         id: parseInt(item[0]),
-        time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a"),
-        red1:  parseInt(item[2]),
-        red2:  parseInt(item[3]),
-        red3:  parseInt(item[4]),
-        blue1:  parseInt(item[5]),
-        blue2:  parseInt(item[6]),
-        blue3:  parseInt(item[7]),
+        time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a").toDate(),
+        red1:  parseInt(item[3]),
+        red2:  parseInt(item[4]),
+        red3:  parseInt(item[5]),
+        blue1:  parseInt(item[6]),
+        blue2:  parseInt(item[7]),
+        blue3:  parseInt(item[8]),
       }
     });
-    console.log(data);
-    this.matches = data;
 
     const oldPos = await AsyncStorage.getItem('position');
     this.position = (oldPos) ? (oldPos as Position) : Position.Red1;

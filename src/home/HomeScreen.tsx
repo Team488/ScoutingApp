@@ -3,8 +3,9 @@ import RN, { View } from 'react-native';
 import { Button, Body, Content, Grid, Icon, Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
-import { connect, ConnectedComponent, MatchList } from '../store';
+import { connect, ConnectedComponent, MatchList, Match } from '../store';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
+import moment from 'moment';
 
 interface Stores {
   matchList: MatchList;
@@ -32,7 +33,6 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
             <Row>
               <Text>Home Screen { this.stores.matchList.position}</Text>
             </Row><Row>
-              {/* <Text>Next match: {this.stores.matchList.nextMatch}</Text> */}
               <NextMatch nextMatch={this.stores.matchList.nextMatch}></NextMatch>
             </Row><Row>
               <Button
@@ -53,10 +53,15 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
 }
 
 type Props = {
-  nextMatch: string
+  nextMatch: Match
 }
 class NextMatch extends React.Component<Props> {
   render() {
-    return <Text>The next match is at: {this.props.nextMatch}</Text>
+    if (!this.props.nextMatch) {
+      return null;
+    }
+
+    const time = moment(this.props.nextMatch.time).format("D-MMM hh:mm A")
+    return <Text>The next Team 488 match is Match #{this.props.nextMatch.id} at: {time}</Text>
   }
 }

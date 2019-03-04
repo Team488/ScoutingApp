@@ -32,7 +32,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
     }
   };
 
-  constructor(props:any) {
+  constructor(props: any) {
     super(props);
     this.state = {
       selected: -1
@@ -42,9 +42,9 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
   selectNextMatch() {
     const now = new Date();
     const matches = this.stores.matchList.matches;
-    for(let i = 0; i < matches.length; i++) {
-      if(matches[i].time > now) {
-        this.setState({selected: matches[i].id})
+    for (let i = 0; i < matches.length; i++) {
+      if (matches[i].time > now) {
+        this.setState({ selected: matches[i].id })
         return
       }
     }
@@ -56,23 +56,36 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
 
   renderItem(info: ListRenderItemInfo<Match>) {
     const renderSelected = () => {
-      if(info.item.id == this.state.selected) {
+      if (info.item.id == this.state.selected) {
         return <Right>
-        <Icon name="right-arrow"></Icon>
-      </Right>
+          <Icon name="md-arrow-forward"></Icon>
+        </Right>
       }
     }
-    return (<ListItem selected={info.item.id == this.state.selected} 
-                        button={true}
-                        onPress={(ev:any) => {
-      this.setState({ selected: info.item.id })
-    }}>
+    return (<ListItem selected={info.item.id == this.state.selected}
+      button={true}
+      onPress={(ev: any) => {
+        this.setState({ selected: info.item.id })
+      }}>
       <Body>
         <Text>{info.item.id}</Text>
         <Text>{moment(info.item.time).format('MMM Do h:mm a')}</Text>
       </Body>
       {renderSelected()}
     </ListItem>)
+  }
+
+  getTeam() {
+    const match = this.stores.matchList.matches.filter((m) => m.id === this.state.selected)[0];
+    console.log(match);
+    switch (this.stores.matchList.position) {
+      case Position.Red1: return match.red1
+      case Position.Red2: return match.red2
+      case Position.Red2: return match.red3
+      case Position.Blue1: return match.blue1
+      case Position.Blue2: return match.blue2
+      case Position.Blue3: return match.blue3
+    }
   }
 
   render() {
@@ -83,23 +96,10 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
         <Grid>
           <Col style={styles.mainCol}>
             <Row style={styles.headerRow}>
-              <Text style={styles.header}>Alliance: <Text style={styles.detail}>BLUE</Text></Text>
+              <Text style={styles.header}>Watch the robot in position: <Text style={styles.detail}>{this.stores.matchList.position}</Text></Text>
             </Row>
             <Row style={styles.headerRow}>
-              <Text style={styles.header}>Team: <Text style={styles.detail}>Team 1732</Text></Text>
-            </Row>
-            <Row style={styles.headerRow}>
-              <Text style={styles.header}>Position: <Text style={styles.detail}>Far</Text></Text>
-            </Row>
-            <Row style={styles.headerRow}>
-              <Text style={styles.header}>Recording Match:</Text>
-              <Picker mode="dropdown" placeholder="Choose a match">
-                <Picker.Item label="Match 1" value="1" />
-                <Picker.Item label="Match 2" value="2" />
-                <Picker.Item label="Match 3" value="3" />
-                <Picker.Item label="Match 4" value="4" />
-                <Picker.Item label="Match 5" value="5" />
-              </Picker>
+              <Text style={styles.header}>Team: <Text style={styles.detail}>{this.getTeam()}</Text></Text>
             </Row>
             <Row>
               <Button block onPress={() => this.selectNextMatch()}>
@@ -114,7 +114,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
             </Row>
           </Col>
         </Grid>
-        <FlatList style={{height: 500, margin: 10}}
+        <FlatList style={{ height: 500, margin: 10 }}
           data={this.stores.matchList.matches}
           renderItem={(item) => this.renderItem(item)}
           keyExtractor={item => item.id.toString()}
