@@ -9,6 +9,7 @@
   "dependencies": {
     "babel-plugin-transform-decorators-legacy": "^1.3.5",
     "babel-preset-react-native": "^4.0.1",
+    "jsc-android": "^236355.1.1",
     "mobx": "^5.9.0",
     "mobx-react": "^5.4.3",
     "native-base": "^2.10.0",

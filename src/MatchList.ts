@@ -1,5 +1,5 @@
 import RNFS from 'react-native-fs';
-import { computed, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { PermissionsAndroid } from 'react-native';
 
 async function requestFilePermission() {
@@ -27,9 +27,15 @@ export class MatchList {
   data = '';
 
   @observable matches = [];
+  @observable matchTime = '3:00pm'
 
   @computed get nextMatch() {
-    return '3:00pm';
+    return this.matchTime;
+  }
+
+  @action update() {
+    this.matchTime = `${Math.floor(Math.random()*10)}:00pm`;
+    console.log('Setting new time: ', this.matchTime);
   }
 
   async loadData() {
@@ -43,6 +49,3 @@ export class MatchList {
     console.log(data);
   }
 }
-
-const matchListStore = new MatchList();
-export default matchListStore;

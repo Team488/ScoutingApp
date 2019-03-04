@@ -13,7 +13,7 @@ import { StartScreen } from './src/start/StartScreen';
 import { RecordScreen } from './src/record/RecordScreen';
 import { ReviewScreen } from './src/review/ReviewScreen';
 import { LoadMatchScreen } from './src/load_match/LoadMatchScreen';
-import matchListStore from './src/MatchList';
+import { MatchList } from './src/MatchList';
 
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
@@ -34,14 +34,15 @@ type Stores = {
 
 export default class App extends React.Component {
   stores: Stores = {};
+  matchList: MatchList;
 
   constructor(props: any) {
     super(props);
 
     //this.stores.matchList = new MatchList();
     //this.stores.matchList.loadData();
-    matchListStore.loadData();
-    this.stores.matchList = matchListStore;
+    this.matchList = new MatchList();
+    this.matchList.loadData();
   }
 
   componentDidMount() {
@@ -54,7 +55,7 @@ export default class App extends React.Component {
 
   render() {
     return (<Root>
-      <Provider {...this.stores}>
+      <Provider {...{matchList: this.matchList}}>
         <AppContainer persistenceKey={"NavigationState"} />
       </Provider>
     </Root>);
