@@ -1,5 +1,5 @@
 import React, { Component, ReactPropTypes } from "react";
-import { Text, TouchableOpacity, View, GestureResponderEvent, StyleSheet } from "react-native";
+import { FlatList, Text, TouchableOpacity, View, GestureResponderEvent, StyleSheet } from "react-native";
 import { Button, Content, Icon, Left, List, ListItem, Right } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import Modal from "react-native-modal";

@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { MatchList } from './MatchList';
 import {inject } from 'mobx-react';
 
-export { MatchList, Position } from './MatchList';
+export { Match, MatchList, Position } from './MatchList';
 
 export interface RootStore {
   matchList: MatchList;
