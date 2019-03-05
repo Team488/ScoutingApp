@@ -5,7 +5,6 @@
 import React, { Component } from 'react';
 import {Provider}  from 'mobx-react';
 import { Button, Text, View } from 'react-native';
-import Orientation, { orientation } from "react-native-orientation";
 import { Root } from 'native-base';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { HomeScreen } from './src/home/HomeScreen';
@@ -69,17 +68,20 @@ export default class App extends React.Component {
 
   componentDidMount() {
     requestFilePermission();
+    /*
     if (Orientation) {
       Orientation.lockToPortrait();
     } else {
       console.warn('Orientation not available, unable to lock portrait.');
     }
+    */
   };
 
   render() {
     return (<Root>
       <Provider {...{matchList: this.matchList}}>
-        <AppContainer persistenceKey={"NavigationState"} />
+        {/* <AppContainer persistenceKey={"NavigationState"} /> */}
+        <AppContainer />
       </Provider>
     </Root>);
   }
