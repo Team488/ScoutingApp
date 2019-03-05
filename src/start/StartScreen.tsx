@@ -41,10 +41,9 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
 
   selectNextMatch() {
     const now = new Date();
-    const matches = this.stores.matchList.matches;
-    for (let i = 0; i < matches.length; i++) {
-      if (matches[i].time > now) {
-        this.setState({ selected: matches[i].id })
+    for (let [i, match] of this.stores.matchList.matches) {
+      if (match.time > now) {
+        this.setState({ selected: match.id })
         return
       }
     }
@@ -76,8 +75,11 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
   }
 
   getTeam() {
-    const match = this.stores.matchList.matches.filter((m) => m.id === this.state.selected)[0];
-    console.log(match);
+    const match = this.stores.matchList.matches.get(this.state.selected);
+    if (!match) {
+      console.warn('Unknown match ' + this.state.selected);
+      return;
+    }
     switch (this.stores.matchList.position) {
       case Position.Red1: return match.red1
       case Position.Red2: return match.red2
@@ -115,7 +117,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
           </Col>
         </Grid>
         <FlatList style={{ height: 500, margin: 10 }}
-          data={this.stores.matchList.matches}
+          data={Array.from(this.stores.matchList.matches.values())}
           renderItem={(item) => this.renderItem(item)}
           keyExtractor={item => item.id.toString()}
         >

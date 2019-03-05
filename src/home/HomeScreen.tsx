@@ -15,7 +15,6 @@ interface Stores {
 @observer
 export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores> {
   static navigationOptions = ({navigation}:any) => {
-    console.log(navigation);
     return {
       header: <ScoutingAppHeader
                 hideBack={true}

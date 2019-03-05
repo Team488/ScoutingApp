@@ -30,23 +30,24 @@ export class MatchList {
   // Which position this tablet is recording data for
   @observable position = Position.Unset;
 
-  @observable matches: Match[] = [];
+  @observable matches: Map<number, Match> = new Map();
   @observable matchTime = '3:00pm'
 
   isXbotMatch(match: Match): boolean {
     return match.red1 == 488 ||
-      match.red2 == 488  ||
-      match.red3 == 488  ||
-      match.blue1 == 488  ||
-      match.blue2 == 488  ||
+      match.red2 == 488 ||
+      match.red3 == 488 ||
+      match.blue1 == 488 ||
+      match.blue2 == 488 ||
       match.blue3 == 488;
   }
 
   @computed get nextMatch() {
     const now = new Date();
-    for(let i = 0; i < this.matches.length; i++) {
-      if(this.matches[i].time > now && this.isXbotMatch(this.matches[i])) {
-        return this.matches[i];
+
+    for (let [i, match] of this.matches) {
+      if (match.time > now && this.isXbotMatch(match)) {
+        return match;
       }
     }
   }
@@ -57,7 +58,7 @@ export class MatchList {
   }
 
   @computed get positionColor() {
-    if( this.position.includes('Red')) {
+    if (this.position.includes('Red')) {
       return "red";
     } else {
       return "blue";
@@ -66,24 +67,25 @@ export class MatchList {
 
   async loadData() {
     const list = await RNFS.readDir(RNFS.ExternalCachesDirectoryPath);
-    console.log(list);
     const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/sample_match_list.csv');
     const rows = rawData.trim().split('\n');
     const headers = rows[0].split(',');
-    this.matches = rows.slice(1).map(r => {
-      const item = r.split(',')
 
-      return {
+    // TODO Sort the matches by timestamp before inserting into the Map
+    for (let i = 1; i < rows.length; i++) {
+      const item = rows[i].split(',')
+      const match = {
         id: parseInt(item[0]),
         time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a").toDate(),
-        red1:  parseInt(item[3]),
-        red2:  parseInt(item[4]),
-        red3:  parseInt(item[5]),
-        blue1:  parseInt(item[6]),
-        blue2:  parseInt(item[7]),
-        blue3:  parseInt(item[8]),
+        red1: parseInt(item[3]),
+        red2: parseInt(item[4]),
+        red3: parseInt(item[5]),
+        blue1: parseInt(item[6]),
+        blue2: parseInt(item[7]),
+        blue3: parseInt(item[8]),
       }
-    });
+      this.matches.set(match.id, match);
+    }
 
     const oldPos = await AsyncStorage.getItem('position');
     this.position = (oldPos) ? (oldPos as Position) : Position.Red1;

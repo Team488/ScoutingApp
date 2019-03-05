@@ -49,7 +49,6 @@ export class EventPanel extends Component<Props, State> {
 
   addEvent(x: Event) {
     Vibration.vibrate(2000, false);
-    console.log('Got event ', x);
     if (x == 'lifted_self') {
       ActionSheet.show(
         {
