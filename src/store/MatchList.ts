@@ -71,6 +71,22 @@ export class MatchList {
     const rows = rawData.trim().split('\n');
     const headers = rows[0].split(',');
 
+    const matches = rows.slice(1).map((r) => {
+      const item = r.split(',')
+      return [parseInt(item[0]), {
+        id: parseInt(item[0]),
+        time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a").toDate(),
+        red1: parseInt(item[3]),
+        red2: parseInt(item[4]),
+        red3: parseInt(item[5]),
+        blue1: parseInt(item[6]),
+        blue2: parseInt(item[7]),
+        blue3: parseInt(item[8]),
+      }] as [number, Match]
+    }).sort((a,b) => a[1].time.getTime() - b[1].time.getTime());
+
+    this.matches = new Map([...matches]);
+
     // TODO Sort the matches by timestamp before inserting into the Map
     for (let i = 1; i < rows.length; i++) {
       const item = rows[i].split(',')
