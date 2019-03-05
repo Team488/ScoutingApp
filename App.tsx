@@ -80,8 +80,7 @@ export default class App extends React.Component {
   render() {
     return (<Root>
       <Provider {...{matchList: this.matchList}}>
-        {/* <AppContainer persistenceKey={"NavigationState"} /> */}
-        <AppContainer />
+        <AppContainer persistenceKey={"NavigationState"} />
       </Provider>
     </Root>);
   }
