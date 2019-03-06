@@ -50,9 +50,12 @@ Go to Settings > Load Match and scan the code to load match data for each tablet
 
 - wire match and team into output
 - create sandstorm panel
-- Add undo/redo button?
+- ready modal before match starts
+- 
+- Separate undo/redo button?
+- persist match results in AsyncStorage
 - Convert eventList to flatlist, or at least to a fixed list
-
+- benchmark AsyncStorage vs https://github.com/FidMe/react-native-fast-storage
 - debounce button inputs
 - add confirmation to delete events
 - add option for lifted events

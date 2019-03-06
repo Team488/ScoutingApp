@@ -42,7 +42,8 @@ async function requestFilePermission() {
         title: 'External storage permission',
         message:
           'ScoutingApp needs to access external storage' +
-          'to save and read data.'
+          'to save and read data.',
+        buttonPositive: 'ok, thanks'
       },
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
