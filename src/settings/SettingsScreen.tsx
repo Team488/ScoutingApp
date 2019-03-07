@@ -32,10 +32,12 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
       data: ''
     };
   }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <Content>
+        <Text>Select which position this tablet should monitor.</Text>
         <Picker 
            mode="dropdown"
            selectedValue={this.stores.matchList.position}
@@ -48,6 +50,8 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
            <Picker.Item label="Blue 2" value={Position.Blue2}/>
            <Picker.Item label="Blue 3" value={Position.Blue3}/>
         </Picker>
+        <Text>Push the match list to the device with 'adb push match_list.csv /sdcard/match_list.csv'.</Text>
+        <Button onPress={() => this.stores.matchList.loadData()}><Text>Load Match List</Text></Button>      
       </Content>
     );
   }

@@ -67,8 +67,7 @@ export class MatchList {
 
   @action
   async loadData() {
-    const list = await RNFS.readDir(RNFS.ExternalCachesDirectoryPath);
-    const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/sample_match_list.csv');
+    const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/match_list.csv');
     const rows = rawData.trim().split('\n');
     const headers = rows[0].split(',');
 

@@ -44,19 +44,24 @@ Create a match list with the time and a the team list in a CSV:
 
 Use the QR Code generator here: https://keremerkan.net/qr-code-and-2d-code-generator/
 
-Go to Settings > Load Match and scan the code to load match data for each tablet.
+The app should load match data on start, but you can also reload the data from Settings -> Load Data.
+
+To push the sample match data to the device, run
+
+    adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
 
-- wire match and team into output
+- load match data button
 - create sandstorm panel
-- ready modal before match starts
-- 
-- Separate undo/redo button?
-- persist match results in AsyncStorage
+- wire match and team into output
 - Convert eventList to flatlist, or at least to a fixed list
-- benchmark AsyncStorage vs https://github.com/FidMe/react-native-fast-storage
 - debounce button inputs
+- ready modal before match starts
+- Separate undo/redo button?
+
+- benchmark AsyncStorage vs https://github.com/FidMe/react-native-fast-storage
+- persist match results in AsyncStorage
 - add confirmation to delete events
 - add option for lifted events
 - alter back button behavior

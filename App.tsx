@@ -64,11 +64,11 @@ export default class App extends React.Component {
     super(props);
 
     this.matchList = new MatchList();
-    this.matchList.loadData();
   }
 
-  componentDidMount() {
-    requestFilePermission();
+  async componentDidMount() {
+    await requestFilePermission();
+    this.matchList.loadData();
     /*
     if (Orientation) {
       Orientation.lockToPortrait();
