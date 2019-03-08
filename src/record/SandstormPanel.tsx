@@ -11,12 +11,6 @@ import { AppRegistry, Image } from 'react-native';
 import DetailModal from './DetailModal';
 import ButtonCard from './ButtonCard';
 
-const BUTTONS = [
-  "Level 1",
-  "Level 2",
-  "Level 3"
-]
-
 export interface TimedEvent {
   timestamp: number,
   code: number
@@ -32,7 +26,7 @@ type State = {
 interface Props {
   onEvent: (event: TimedEvent) => void
 }
-export class EventPanel extends Component<Props, State> {
+export class SandstormPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -227,7 +221,7 @@ export class EventPanel extends Component<Props, State> {
       <View>
         <View>
               <Row style={styles.row}>
-                <Text>IN TELEOP</Text>
+                <Text>IN SANDSTORM</Text>
               </Row>
           <Grid>
             <Col style={styles.leftColumn}>

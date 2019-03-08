@@ -4,6 +4,7 @@ import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Tex
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { EventPanel, TimedEvent } from './EventPanel';
 import { EventList, MatchEvent } from './EventList';
+import { SandstormPanel } from './SandstormPanel';
 import { StatusBar } from './StatusBar';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 
@@ -67,8 +68,8 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <StatusBar title="test"></StatusBar>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
+        <SandstormPanel onEvent={(e) => this.newEvent(e)}></SandstormPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
       </Content>
     );
