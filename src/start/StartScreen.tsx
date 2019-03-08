@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Ref } from 'react';
 import { FlatList, View, ListRenderItemInfo, StyleSheet } from 'react-native';
 import { Button, Content, Body, Left, List, ListItem, Icon, Grid, Row, Col, Header, Form, Picker, Right, Text, Title } from 'native-base';
 import { NavigationScreenProps } from 'react-navigation';
@@ -24,6 +24,7 @@ type State = {
 @connect("matchList")
 @observer
 export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store, State> {
+
   static navigationOptions = ({ navigation }: any) => {
     return {
       header: <ScoutingAppHeader
@@ -57,7 +58,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
     const renderSelected = () => {
       if (info.item.id == this.state.selected) {
         return <Right>
-          <Icon name="md-arrow-forward"></Icon>
+          <Text>Selected</Text>
         </Right>
       }
     }
@@ -67,7 +68,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
         this.setState({ selected: info.item.id })
       }}>
       <Body>
-        <Text>{info.item.id}</Text>
+        <Text>Match #{info.item.id}</Text>
         <Text>{moment(info.item.time).format('MMM Do h:mm a')}</Text>
       </Body>
       {renderSelected()}
@@ -92,7 +93,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
 
   render() {
     const { navigate } = this.props.navigation;
-
+    const selectedMatch = this.stores.matchList.matches.get(this.state.selected) || {id: "None selected"};
     return (
       <Content>
         <Grid>
@@ -101,14 +102,17 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
               <Text style={styles.header}>Watch the robot in position: <Text style={styles.detail}>{this.stores.matchList.position}</Text></Text>
             </Row>
             <Row style={styles.headerRow}>
-              <Text style={styles.header}>Team: <Text style={styles.detail}>{this.getTeam()}</Text></Text>
+              <Text style={styles.header}>Selected Match: <Text style={styles.detail}>{selectedMatch.id}</Text></Text>
+            </Row>
+            <Row style={styles.headerRow}>
+              <Text style={styles.header}>You're watching team: <Text style={styles.detail}>{this.getTeam()}</Text></Text>
             </Row>
             <Row>
-              <Button block onPress={() => this.selectNextMatch()}>
+              <Button large block onPress={() => this.selectNextMatch()}>
                 <Text>Select Next Match</Text>
               </Button>
               <Right>
-                <Button block style={{ alignSelf: "flex-end" }}
+                <Button large block style={{ alignSelf: "flex-end" }}
                   onPress={() => navigate('Record')}>
                   <Text>Start</Text>
                 </Button>

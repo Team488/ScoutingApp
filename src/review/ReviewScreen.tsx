@@ -21,7 +21,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
     const events = this.props.navigation.getParam('events') as MatchEvent[];
     console.log("Got events ", events)
     // TODO: Process event log for qr code.
-    const eventData = events
+    const eventData = '1 488$' + events
       .sort((a, b) => a.timestamp! - b.timestamp!)
       .map((e) => {
         // Timestamp is in tenths of a second
