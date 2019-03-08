@@ -51,17 +51,17 @@ To push the sample match data to the device, run
     adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
+- save match data to AsyncStorage
+- add ready modal to the record screen
+- starting position
+- ending events
+- Add match review list to home screen
 
-- load match data button
-- create sandstorm panel
-- wire match and team into output
 - Convert eventList to flatlist, or at least to a fixed list
 - debounce button inputs
-- ready modal before match starts
 - Separate undo/redo button?
 
 - benchmark AsyncStorage vs https://github.com/FidMe/react-native-fast-storage
-- persist match results in AsyncStorage
 - add confirmation to delete events
 - add option for lifted events
 - alter back button behavior

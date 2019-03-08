@@ -1,4 +1,4 @@
-for dev in `adb devices | grep -v List | cut -f1`; do
+for dev in `adb devices | grep -v List | grep -v emulator | cut -f1`; do
   echo "Updating ${dev}"
   adb -s ${dev} uninstall com.scoutingapp
   adb -s ${dev} install ./android/app/build/outputs/apk/release/app-release.apk
