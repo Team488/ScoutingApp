@@ -45,8 +45,6 @@ export class StatusBar extends Component<Props, State> {
     return (
       <View style={{flex:1, flexDirection: "row", margin: 5}}>
         <View style={{flex:1, flexDirection: "column"}}>
-          <Text>Hatches:</Text>
-          <Text>Cargo:</Text>
         </View>
         <View style={{flex:1, flexDirection: "column"}}>
           <Text>{this.state.time.toFixed(2)}</Text>
