@@ -37,7 +37,9 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
   }
 
   save() {
-    this.props.navigation.replace('Review', {events: this.state.events, matchStart: this.matchStart});
+    const team = this.props.navigation.getParam('team');
+    const match = this.props.navigation.getParam('match');
+    this.props.navigation.replace('Review', {events: this.state.events, matchStart: this.matchStart, team, match });
   }
 
   // Drop any in-progress recording and go back to start.
@@ -65,7 +67,6 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <StatusBar title="test"></StatusBar>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
       </Content>
