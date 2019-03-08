@@ -84,7 +84,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
     switch (this.stores.matchList.position) {
       case Position.Red1: return match.red1
       case Position.Red2: return match.red2
-      case Position.Red2: return match.red3
+      case Position.Red3: return match.red3
       case Position.Blue1: return match.blue1
       case Position.Blue2: return match.blue2
       case Position.Blue3: return match.blue3
