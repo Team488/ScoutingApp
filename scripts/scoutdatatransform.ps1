@@ -1,5 +1,5 @@
 ﻿$outputFile = 'C:/Scouting/eventdata.csv' 
-Set-Content -Path $outputFile -Value "Match,Robot,Code,Time"
+Set-Content -Path $outputFile -Value "Match,Team,Event Number,Time"
 $input = "go"
 while ($input.tolower() -ne "q")
 {
