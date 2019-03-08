@@ -68,9 +68,15 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <SandstormPanel onEvent={(e) => this.newEvent(e)}></SandstormPanel>
+        <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
         <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
+        {/* <View>
+          <DetailModal
+            show={this.state.showDialog}
+            onDone={this.dialogDone.bind(this)}
+            render={this.state.dialogContent}></DetailModal>
+        </View> */}
       </Content>
     );
   }

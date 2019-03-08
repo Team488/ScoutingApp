@@ -10,6 +10,7 @@ import {
 import { AppRegistry, Image } from 'react-native';
 import DetailModal from './DetailModal';
 import ButtonCard from './ButtonCard';
+import { EventCode } from './Events';
 
 export interface TimedEvent {
   timestamp: number,
@@ -17,9 +18,6 @@ export interface TimedEvent {
 }
 
 type State = {
-  showDialog: boolean,
-  dialogContent: JSX.Element
-  isDisabled: boolean,
   inOpposingTerritory: boolean
 }
 
@@ -30,51 +28,15 @@ export class SandstormPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      isDisabled: false,
       inOpposingTerritory: false,
-      showDialog: false,
-      dialogContent: <Text>Empty Dialog</Text>
     }
   }
 
-  emitEvent(event: number) {
-    this.props.onEvent({ timestamp: Date.now(), code: event })
-  }
-
-  addEvent(x: Event) {
-    Vibration.vibrate(2000, false);
-    if (x == 'lifted_self') {
-      ActionSheet.show(
-        {
-          options: BUTTONS,
-          cancelButtonIndex: 0,
-          destructiveButtonIndex: 0,
-          title: "Which level"
-        },
-        (buttonIndex) => {
-          console.log("Got button ", buttonIndex)
-        }
-      )
+  emitEvent(event: number, timestamp?: number) {
+    if (!timestamp) {
+      timestamp = Date.now();
     }
-  }
-
-  renderDisabledButton() {
-    if (this.state.isDisabled) {
-      return (<Button large style={styles.eventButton}
-        onPress={(x) => {
-          this.setState({ isDisabled: false });
-          this.emitEvent(6);
-        }}>
-        <Text>Restored</Text>
-      </Button>)
-    }
-    return (<Button large style={styles.eventButton}
-      onPress={(x) => {
-        this.setState({ isDisabled: true });
-        this.emitEvent(5);
-      }}>
-      <Text>Disabled</Text>
-    </Button>)
+    this.props.onEvent({ timestamp, code: event })
   }
 
   renderOTButton() {
@@ -96,129 +58,70 @@ export class SandstormPanel extends Component<Props, State> {
     </Button>)
   }
 
-  /**
-   * This is an example of a relatively complex dialog. We could customize this and
-   * add some icons, or even pictures of the rocket and ship to indicate location.
-   * Right now, it's just a panel with sizx buttons.
-   */
+  showDialog(title: string, options: { [index: string]: number }) {
+    const cancelIdx = Object.keys(options).length;
+    const timestamp = Date.now();
+    ActionSheet.show(
+      {
+        options: [...Object.keys(options), "Cancel"],
+        cancelButtonIndex: cancelIdx,
+        title,
+      },
+      buttonIndex => {
+        if (buttonIndex === cancelIdx) {
+          return;
+        }
+        const i = Object.keys(options)[buttonIndex];
+        this.emitEvent(options[i], timestamp);
+      }
+    )
+  }
+
   scoreHatchRocket() {
-    // TODO: Capture the timestamp before opening the dialog
-    this.setState({
-      dialogContent: (
-        <Content style={{ margin: 10, padding: 10 }}>
-          <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
-            <Text>Where and on which side of the ROCKET was the HATCH scored?</Text>
-          </View>
-          <Grid>
-            <Col>
-              <Row>
-                <Text>BACK</Text>
-              </Row>
-              <Row>
-                <Button large onPress={() => this.dialogDone(28)}>
-                  <Text>Back Top</Text>
-                </Button>
-              </Row>
-              <Row>
-                <Button large onPress={() => this.dialogDone(26)}>
-                  <Text>Back Middle</Text>
-                </Button>
-              </Row>
-              <Row>
-                <Button large onPress={() => this.dialogDone(24)}>
-                  <Text>Back Bottom</Text>
-                </Button>
-              </Row>
-            </Col>
-            <Col>
-              <Row style={{ margin: 5 }}>
-                <Text>FRONT</Text>
-              </Row>
-              <Row style={{ margin: 5 }}>
-                <Button large onPress={() => this.dialogDone(29)}>
-                  <Text>Front Top</Text>
-                </Button>
-              </Row>
-              <Row style={{ margin: 5 }}>
-                <Button large onPress={() => this.dialogDone(27)}>
-                  <Text>Front Middle</Text>
-                </Button>
-              </Row>
-              <Row style={{ margin: 5 }}>
-                <Button large onPress={() => this.dialogDone(25)}>
-                  <Text>Front Bottom</Text>
-                </Button>
-              </Row>
-            </Col>
-          </Grid>
-        </Content>),
-      showDialog: true
-    });
+    this.showDialog(
+      "Where on the ROCKET was the HATCH scored?",
+      {
+        "FRONT TOP": EventCode.SAND_HATCH_FRONT_TOP,
+        "FRONT MIDDLE": EventCode.SAND_HATCH_FRONT_MID,
+        "FRONT BOTTOM": EventCode.SAND_HATCH_FRONT_BOT,
+        "BACK TOP": EventCode.SAND_HATCH_BACK_TOP,
+        "BACK MIDDLE": EventCode.SAND_HATCH_BACK_MID,
+        "BACK BOTTOM": EventCode.SAND_HATCH_BACK_BOT,
+      }
+    )
   }
 
   scoreHatchShip() {
-    this.setState({
-      dialogContent: (
-        <Content>
-          <Text>Where on the SHIP was the HATCH scored?</Text>
-          <Button onPress={() => this.dialogDone(23)}>
-            <Text>Side</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(22)}>
-            <Text>Front</Text>
-          </Button>
-        </Content>),
-      showDialog: true
-    });
+    this.showDialog(
+      "Where on the SHIP was the HATCH scored?",
+      {
+        "FRONT": EventCode.SAND_HATCH_SHIP_FRONT,
+        "SIDE": EventCode.SAND_HATCH_SHIP_SIDE
+      })
   }
 
   scoreCargoRocket() {
-    this.setState({
-      dialogContent: (
-        <Content>
-          <Text>Where on the ROCKET was the CARGO scored?</Text>
-          <Button onPress={() => this.dialogDone(46)}>
-            <Text>Top</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(45)}>
-            <Text>Middle</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(44)}>
-            <Text>Bottom</Text>
-          </Button>
-        </Content>),
-      showDialog: true
-    });
+    this.showDialog(
+      "Where on the ROCKET was the CARGO scored?",
+      {
+        "TOP": EventCode.SAND_CARGO_TOP,
+        "MIDDLE": EventCode.SAND_CARGO_MID,
+        "BOTTOM": EventCode.SAND_CARGO_BOT
+      });
   }
 
   scoreCargoShip() {
-    this.setState({
-      dialogContent: (
-        <Content>
-          <Text>Where on the SHIP was the CARGO scored?</Text>
-          <Button onPress={() => this.dialogDone(43)}>
-            <Text>Side</Text>
-          </Button>
-          <Button onPress={() => this.dialogDone(42)}>
-            <Text>Front</Text>
-          </Button>
-        </Content>),
-      showDialog: true
-    });
-  }
-
-  dialogDone(event?: number) {
-    if (event != undefined) {
-      this.emitEvent(event);
-    }
-    this.setState({
-      showDialog: false
-    })
+    this.showDialog(
+      "Where on the SHIP was the CARGO scored?",
+      {
+        "FRONT": EventCode.SAND_CARGO_SHIP_FRONT,
+        "SIDE": EventCode.SAND_CARGO_SHIP_SIDE
+      })
   }
 
   render() {
     return (
-      <View>
+      <View style={{backgroundColor: "#fce38a", padding: 5}}>
         <View>
               <Row style={styles.row}>
                 <Text>IN SANDSTORM</Text>
@@ -226,7 +129,7 @@ export class SandstormPanel extends Component<Props, State> {
           <Grid>
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
-                <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "lightyellow" }}>
+                <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreHatchRocket()}>
                     <Text>Rocket</Text>
@@ -238,13 +141,13 @@ export class SandstormPanel extends Component<Props, State> {
                 </ButtonCard>
               </Row>
               <Row style={styles.row}>
-                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "lightyellow" }}>
+                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(20)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_FLOOR)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(21)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_STATION)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -252,7 +155,7 @@ export class SandstormPanel extends Component<Props, State> {
             </Col>
             <Col style={styles.rightColumn}>
               <Row style={styles.row}>
-                <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "lightblue" }}>
+                <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreCargoRocket()}>
                     <Text>Rocket</Text>
@@ -264,13 +167,13 @@ export class SandstormPanel extends Component<Props, State> {
                 </ButtonCard>
               </Row>
               <Row style={styles.row}>
-                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "lightblue" }}>
+                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(40)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_FLOOR)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(41)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_STATION)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -283,18 +186,21 @@ export class SandstormPanel extends Component<Props, State> {
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(2)}>
+                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_HATCH)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
               </Row>
               <Row style={styles.row}>
-                {this.renderDisabledButton()}
+                <Button large style={styles.eventButton}
+                  onPress={(x) => this.emitEvent(EventCode.SAND_CROSS_START)}>
+                  <Text>Crossed Start</Text>
+                </Button>
               </Row>
             </Col>
             <Col style={styles.rightColumn}>
               <Row style={styles.row}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(3)}>
+                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_CARGO)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
               </Row>
@@ -303,12 +209,6 @@ export class SandstormPanel extends Component<Props, State> {
               </Row>
             </Col>
           </Grid>
-        </View>
-        <View>
-          <DetailModal
-            show={this.state.showDialog}
-            onDone={this.dialogDone.bind(this)}
-            render={this.state.dialogContent}></DetailModal>
         </View>
       </View>
     )
