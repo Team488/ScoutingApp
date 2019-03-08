@@ -1,6 +1,6 @@
 import React from 'react';
-import RN, { View } from 'react-native';
-import { Button, Body, Content, Grid, Icon, Header, Left, Right, Row, Col, Text, Title } from 'native-base';
+import RN, { StyleProp, StyleSheet, View } from 'react-native';
+import { Button, Body, Content, Grid, Icon, H2,  Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
 import { connect, ConnectedComponent, MatchList, Match } from '../store';
@@ -27,25 +27,23 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <Grid>
-          <Col>
-            <Row>
-              <Text>Home Screen { this.stores.matchList.position}</Text>
-            </Row><Row>
-              <NextMatch nextMatch={this.stores.matchList.nextMatch}></NextMatch>
-            </Row><Row>
-              <Button
-                onPress={() => navigate('Start')}
-              >
-                <Text>Record a match</Text>
-              </Button>
-            </Row><Row>
-              <Button onPress={() => navigate("Settings")}>
-                <Text>Settings</Text>
-              </Button>
-            </Row>
-          </Col>
-        </Grid>
+        <View style={styles.panel}>
+          <NextMatch style={styles.nextMatch}
+            nextMatch={this.stores.matchList.nextMatch}></NextMatch>
+          <Button 
+            large bordered
+            style={styles.matchButton}
+            onPress={() => navigate('Start')}
+          >
+            <Text>Record a match</Text>
+          </Button>
+          <Button 
+            large bordered
+            style={styles.settingsButton}
+            onPress={() => navigate("Settings")}>
+            <Text>Settings</Text>
+          </Button>
+        </View>
       </Content>
     );
   }
@@ -53,14 +51,38 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
 
 type Props = {
   nextMatch: Match
+  style: StyleProp 
 }
 class NextMatch extends React.Component<Props> {
   render() {
     if (!this.props.nextMatch) {
-      return null;
+      return <H2 style={this.props.style}>Match data not loaded</H2>;
     }
 
     const time = moment(this.props.nextMatch.time).format("D-MMM hh:mm A")
-    return <Text>The next Team 488 match is Match #{this.props.nextMatch.id} at: {time}</Text>
+    return <View style={this.props.style}><H2 style={this.props.style}>Next Team 488 match is Match #{this.props.nextMatch.id}</H2>
+    <H2>{time}</H2>
+    </View>
+    
   }
 }
+
+const styles = StyleSheet.create({
+  panel: {
+    flex: 1,
+    alignContent: 'center',
+    justifyContent: 'space-between',
+  },
+  nextMatch: {
+   marginTop: 30,
+   alignSelf: "center"
+  },
+  matchButton: {
+    marginTop: 50,
+   alignSelf: "center"
+  },
+  settingsButton: {
+    marginTop: 50,
+   alignSelf: "center"
+  }
+})
