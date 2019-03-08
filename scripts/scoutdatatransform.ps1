@@ -1,9 +1,17 @@
-﻿$outputFile = 'C:/Scouting/eventdata.csv' 
-Set-Content -Path $outputFile -Value "Match,Team,Event Number,Time"
+$outputFile = 'C:/Scouting/eventdata.csv'
+Clear-Host
+if (test-path $outputFile) 
+{
+    Write-Host "Found an existing data file so we will use it."
+}
+else 
+{
+    Set-Content -Path $outputFile -Value "Match,Team,Event Number,Time"
+}
 $input = "go"
 while ($input.tolower() -ne "q")
 {
-    $input = Read-Host -Prompt "Input QR scan"
+    $input = Read-Host -Prompt "Scan the QR code now"
     #to do: match 2 numbers separated by a space and a $ sign rather than 1 digit
     if ($input -notmatch "^\d") { 
         if ($input -ne "q") {
