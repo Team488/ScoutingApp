@@ -16,7 +16,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
     super(props);
     this.state = {
       eventData: '%',
-      ended: 0,
+      ended: EventCode.ENDED_1,
       lifted: 0,
     }
   }
