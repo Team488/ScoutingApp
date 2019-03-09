@@ -4,11 +4,9 @@ import { StyleSheet, Vibration, View } from 'react-native';
 import Modal from "react-native-modal";
 import {
   ActionSheet, Button, Body, Left, Card, CardItem, Col,
-  Container, Content, Grid, Header, List, ListItem,
+  Container, Content, Grid, H3, Header, List, ListItem,
   Row, Icon, Title, Text
 } from 'native-base';
-import { AppRegistry, Image } from 'react-native';
-import DetailModal from './DetailModal';
 import ButtonCard from './ButtonCard';
 import { EventCode } from './Events';
 
@@ -44,7 +42,7 @@ export class SandstormPanel extends Component<Props, State> {
       return (<Button large style={styles.eventButton}
         onPress={(x) => {
           this.setState({ inOpposingTerritory: false });
-          this.emitEvent(4);
+          this.emitEvent(EventCode.SAND_LEAVE_OT);
         }}>
         <Text>Left OT</Text>
       </Button>)
@@ -52,7 +50,7 @@ export class SandstormPanel extends Component<Props, State> {
     return (<Button large style={styles.eventButton}
       onPress={(x) => {
         this.setState({ inOpposingTerritory: true });
-        this.emitEvent(1);
+        this.emitEvent(EventCode.SAND_ENTER_OT);
       }}>
       <Text>Entered OT</Text>
     </Button>)
@@ -121,11 +119,11 @@ export class SandstormPanel extends Component<Props, State> {
 
   render() {
     return (
-      <View style={{backgroundColor: "#fce38a", padding: 5}}>
+      <View style={{ backgroundColor: "#fce38a", padding: 5 }}>
         <View>
-              <Row style={styles.row}>
-                <Text>IN SANDSTORM</Text>
-              </Row>
+          <Row style={styles.row}>
+            <H3>IN SANDSTORM</H3>
+          </Row>
           <Grid>
             <Col style={styles.leftColumn}>
               <Row style={styles.row}>

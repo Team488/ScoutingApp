@@ -13,6 +13,7 @@ export interface MatchEvent {
 
 type Props = {
   events: MatchEvent[],
+  start: number;
   onDeleteEvent: (id: number) => void
 }
 export class EventList extends Component<Props> {
@@ -25,16 +26,12 @@ export class EventList extends Component<Props> {
     hardClose: false
   };
 
-  componentWillMount() {
-    this.start = Date.now();
-  }
-
   private createList() {
     if (!this.props.events || this.props.events.length == 0) {
       return (<Text style={styles.placeholder}>No events yet!</Text>)
     }
     return this.props.events.map((e: MatchEvent) => {
-      const time = (e.timestamp! - this.start)/1000
+      const time = (e.timestamp! - this.props.start)/1000
       return (<ListItem key={e.id}>
         <Left>
           <Text>{time.toFixed(1)}</Text>

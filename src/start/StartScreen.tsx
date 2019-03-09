@@ -112,9 +112,9 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
                 <Text>Select Next Match</Text>
               </Button>
               <Right>
-                <Button large block style={{ alignSelf: "flex-end" }}
+                <Button disabled={this.state.selected < 0} large block style={{ alignSelf: "flex-end" }}
                   onPress={() => navigate('Record', {match: selectedMatch.id, team: this.getTeam()})}>
-                  <Text>Start</Text>
+                  <Text>Ready</Text>
                 </Button>
               </Right>
             </Row>

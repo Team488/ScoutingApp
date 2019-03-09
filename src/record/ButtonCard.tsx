@@ -8,7 +8,7 @@ import {
   Row, Icon, Title, Text
 } from 'native-base';
 import { AppRegistry, Image } from 'react-native';
-import DetailModal from './DetailModal';
+import DetailModal from './ReadyModal';
 
 type Props = {
   title: string,

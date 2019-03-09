@@ -5,20 +5,24 @@ import { NavigationActions, NavigationScreenProps, createStackNavigator, createA
 import { EventPanel, TimedEvent } from './EventPanel';
 import { EventList, MatchEvent } from './EventList';
 import { SandstormPanel } from './SandstormPanel';
-import { StatusBar } from './StatusBar';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
+import { ReadyModal } from './ReadyModal';
 
 type State = {
-  events: MatchEvent[]
+  events: MatchEvent[],
+  showDialog: boolean
+  matchStart: number
 }
+
 export class RecordScreen extends React.Component<NavigationScreenProps, State> {
   private nextEventID = 0;
-  matchStart = 0;
 
   constructor(props: NavigationScreenProps) {
     super(props);
     this.state = {
-      events: []
+      events: [],
+      showDialog: true,
+      matchStart: Date.now()
     }
   }
 
@@ -33,14 +37,12 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
 
   componentDidMount() {
     this.props.navigation.setParams({ handleSave: this.save.bind(this)});
-    // TODO: Pass match start time to children 
-    this.matchStart = Date.now();
   }
 
   save() {
     const team = this.props.navigation.getParam('team');
     const match = this.props.navigation.getParam('match');
-    this.props.navigation.replace('Review', {events: this.state.events, matchStart: this.matchStart, team, match });
+    this.props.navigation.replace('Review', {events: this.state.events, matchStart: this.state.matchStart, matchFinish: Date.now(), team, match });
   }
 
   // Drop any in-progress recording and go back to start.
@@ -64,19 +66,25 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     });
   }
 
+  dialogDone(positionEvent: number) {
+    this.setState({matchStart: Date.now()}); 
+    this.setState({showDialog: false});
+    this.newEvent({timestamp: Date.now(), code: positionEvent});
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <Content>
         <SandstormPanel onEvent={(e) => this.newEvent(e)}></SandstormPanel>
         <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
-        <EventList onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
-        {/* <View>
-          <DetailModal
+        <EventList start={this.state.matchStart} onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
+        <View>
+          <ReadyModal
+            team={this.props.navigation.getParam('team')}
             show={this.state.showDialog}
-            onDone={this.dialogDone.bind(this)}
-            render={this.state.dialogContent}></DetailModal>
-        </View> */}
+            onDone={this.dialogDone.bind(this)}></ReadyModal>
+        </View>
       </Content>
     );
   }
