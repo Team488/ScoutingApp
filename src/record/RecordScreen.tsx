@@ -67,8 +67,15 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
   }
 
   dialogDone(positionEvent: number) {
-    this.setState({matchStart: Date.now()}); 
+    console.log("Dialog Done! ", positionEvent)
     this.setState({showDialog: false});
+    // If the initial dialog is cancelled with nothing selected, that means the back button was pressed. If that happens,
+    // skip everything and just go back to the selection screen.
+    if (!positionEvent) {
+      this.props.navigation.goBack();
+      return;
+    }
+    this.setState({matchStart: Date.now()});
     this.newEvent({timestamp: Date.now(), code: positionEvent});
   }
 

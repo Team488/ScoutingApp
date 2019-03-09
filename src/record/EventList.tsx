@@ -30,6 +30,7 @@ export class EventList extends Component<Props> {
     if (!this.props.events || this.props.events.length == 0) {
       return (<Text style={styles.placeholder}>No events yet!</Text>)
     }
+    console.log("showing events ", this.props.events)
     return this.props.events.map((e: MatchEvent) => {
       const time = (e.timestamp! - this.props.start)/1000
       return (<ListItem key={e.id}>
