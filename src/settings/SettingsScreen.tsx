@@ -1,11 +1,12 @@
 import React from 'react';
 import {Header} from 'react-navigation';
-import { View} from 'react-native';
+import { View, AsyncStorage} from 'react-native';
 import { Button, Content, Grid, Row, Col, Picker, Text } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { connect, ConnectedComponent, MatchList, Position } from '../store';
 import { observer } from 'mobx-react';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
+import RNFS from 'react-native-fs'
 
 type State = {
   data: string
@@ -33,6 +34,12 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
     };
   }
 
+  async saveMatchData() {
+    const matches = await AsyncStorage.getItem('matches'); 
+    console.log("Saving all match data: ", matches);
+    await RNFS.writeFile(RNFS.ExternalStorageDirectoryPath + '/match_data.txt', JSON.stringify(matches));
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -52,6 +59,10 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
         </Picker>
         <Text>Push the match list to the device with 'adb push match_list.csv /sdcard/match_list.csv'.</Text>
         <Button onPress={() => this.stores.matchList.loadData()}><Text>Load Match List</Text></Button>      
+
+        <Text>Save all match data to a text file.</Text>
+        <Text>You can grab it with 'adb pull /sdcard/match_data.txt'</Text>
+        <Button onPress={() => this.saveMatchData()}><Text>Save Match Data</Text></Button>      
       </Content>
     );
   }

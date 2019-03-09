@@ -1,5 +1,5 @@
 import React from 'react';
-import RN, { StyleProp, StyleSheet, View } from 'react-native';
+import RN, { StyleProp, StyleSheet, View, AsyncStorage } from 'react-native';
 import { Button, Body, Content, Grid, Icon, H2,  Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
@@ -25,6 +25,7 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
 
   render() {
     const { navigate } = this.props.navigation;
+    AsyncStorage.getItem('matches', (err, result) => {console.log("Matches: ", result)});
     return (
       <Content>
         <View style={styles.panel}>
