@@ -16,7 +16,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
     super(props);
     this.state = {
       eventData: '%',
-      ended: 0,
+      ended: EventCode.ENDED_1,
       lifted: 0,
     }
   }
@@ -83,7 +83,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
           <Picker.Item label="Position 3" value={EventCode.ENDED_3} />
         </Picker>
         <View style={{ marginTop: 20, alignSelf: "center" }}>
-          <QRCode size={500} value={this.state.eventData}></QRCode>
+          <QRCode size={500} value={eventData}></QRCode>
 
           <Text>{eventData}</Text>
         </View>
