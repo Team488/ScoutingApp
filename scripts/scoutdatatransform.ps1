@@ -19,7 +19,7 @@ while ($input.tolower() -ne "q")
         }
         continue 
     }
-    $matchdata = $input.split("#")
+    $matchdata = $input.split("%")
     foreach ($matchitem in $matchdata) 
     {
         $events = $matchitem.split("$")
@@ -28,8 +28,8 @@ while ($input.tolower() -ne "q")
         foreach ($event in $events) 
         {
             if ($event -eq $events[0] -OR !$event ) {continue}
-            $code = $event.split(" ")[0]
-            $value = $event.split(" ")[1]
+            $code = $event.split(" ")[1]
+            $value = $event.split(" ")[0]
             $outline = $match + ',' + $robot + ',' + $code + ',' + $value
             Write-Host $outline
             Add-Content -Path $outputFile -Value $outline
@@ -37,6 +37,6 @@ while ($input.tolower() -ne "q")
             Copy-Item -Path $outputFile -Destination $destFile 
         }
     }
-    Clear-Host
+    #Clear-Host
 } 
 Write-Host "Thanks for using the scan collector!"
