@@ -51,8 +51,6 @@ To push the sample match data to the device, run
     adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
-- Change "position" for start and end to "level"
-    - only level 1 and 2 on start
 - save match data to sdcard1
 - Put position in match data filename
 - Allow recording matches not on the list

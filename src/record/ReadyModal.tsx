@@ -52,9 +52,8 @@ export class ReadyModal extends Component<Props> {
                   this.setState({ position: v })
                 }}
               >
-                <Picker.Item label="Position 1" value={EventCode.START_1} />
-                <Picker.Item label="Position 2" value={EventCode.START_2} />
-                <Picker.Item label="Position 3" value={EventCode.START_3} />
+                <Picker.Item label="Level 1" value={EventCode.START_1} />
+                <Picker.Item label="Level 2" value={EventCode.START_2} />
               </Picker>
               <Button
                 style={{ alignSelf: "center" }}

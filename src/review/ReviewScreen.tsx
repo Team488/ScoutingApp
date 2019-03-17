@@ -69,7 +69,7 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
           <Picker.Item label="Level 2" value={EventCode.LIFTED_2} />
           <Picker.Item label="Level 3" value={EventCode.LIFTED_3} />
         </Picker>
-        <H3 style={{ marginTop: 20 }}>Which position did the robot end at?</H3>
+        <H3 style={{ marginTop: 20 }}>Which level did the robot end on?</H3>
         <Picker
           mode="dropdown"
           placeholder="ending position"
@@ -78,9 +78,9 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
             this.setState({ ended: v })
           }}
         >
-          <Picker.Item label="Position 1" value={EventCode.ENDED_1} />
-          <Picker.Item label="Position 2" value={EventCode.ENDED_2} />
-          <Picker.Item label="Position 3" value={EventCode.ENDED_3} />
+          <Picker.Item label="Level 1" value={EventCode.ENDED_1} />
+          <Picker.Item label="Level 2" value={EventCode.ENDED_2} />
+          <Picker.Item label="Level 3" value={EventCode.ENDED_3} />
         </Picker>
         <View style={{ marginTop: 20, alignSelf: "center" }}>
           <QRCode size={500} value={eventData}></QRCode>
