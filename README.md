@@ -51,10 +51,11 @@ To push the sample match data to the device, run
     adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
-- save match data to AsyncStorage
-- add ready modal to the record screen
-- starting position
-- ending events
+- Change "position" for start and end to "level"
+    - only level 1 and 2 on start
+- save match data to sdcard1
+- Put position in match data filename
+- Allow recording matches not on the list
 - Add match review list to home screen
 
 - Convert eventList to flatlist, or at least to a fixed list

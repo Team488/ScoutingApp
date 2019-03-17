@@ -19,7 +19,7 @@ type State = {
 interface Props {
   onEvent: (event: TimedEvent) => void
 }
-export class EventPanel extends Component<Props, State> {
+export class TeleopPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -136,14 +136,14 @@ export class EventPanel extends Component<Props, State> {
 
   render() {
     return (
-      <View style={{backgroundColor: "#95e1d3", padding: 5}}>
+      <View style={{ backgroundColor: "#95e1d3", padding: 5 }}>
         <View>
           <Row style={styles.row}>
             <H3>IN TELEOP</H3>
           </Row>
           <Grid>
-            <Col style={styles.leftColumn}>
-              <Row style={styles.row}>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
                 <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreHatchRocket()}>
@@ -154,22 +154,8 @@ export class EventPanel extends Component<Props, State> {
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-              <Row style={styles.row}>
-                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_FLOOR)}>
-                    <Text>Floor</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_STATION)}>
-                    <Text>Station</Text>
-                  </Button>
-                </ButtonCard>
-              </Row>
-            </Col>
-            <Col style={styles.rightColumn}>
-              <Row style={styles.row}>
+              </Col>
+              <Col style={styles.rightColumn}>
                 <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreCargoRocket()}>
@@ -180,46 +166,56 @@ export class EventPanel extends Component<Props, State> {
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-              <Row style={styles.row}>
-                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
+                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_FLOOR)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_FLOOR)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_STATION)}>
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_STATION)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-            </Col>
-          </Grid>
-        </View>
-        <View>
-          <Grid>
-            <Col style={styles.leftColumn}>
-              <Row style={styles.row}>
+              </Col>
+              <Col style={styles.rightColumn}>
+                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_FLOOR)}>
+                    <Text>Floor</Text>
+                  </Button>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_STATION)}>
+                    <Text>Station</Text>
+                  </Button>
+                </ButtonCard>
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.DROP_HATCH)}>
+                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_HATCH)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
-              </Row>
-              <Row style={styles.row}>
-                {this.renderDisabledButton()}
-              </Row>
-            </Col>
-            <Col style={styles.rightColumn}>
-              <Row style={styles.row}>
+              </Col>
+              <Col style={styles.rightColumn}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.DROP_CARGO)}>
+                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_CARGO)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
-              </Row>
-              <Row style={styles.row}>
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
+                {this.renderDisabledButton()}
+              </Col>
+              <Col style={styles.rightColumn}>
                 {this.renderOTButton()}
-              </Row>
-            </Col>
+              </Col>
+            </Row>
           </Grid>
         </View>
       </View>
@@ -229,7 +225,8 @@ export class EventPanel extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   eventButton: {
-    margin: 5
+    margin: 5,
+    alignSelf: 'center'
   },
   row: {
     alignContent: 'center',

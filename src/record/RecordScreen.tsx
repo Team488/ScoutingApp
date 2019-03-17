@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-import { EventPanel, TimedEvent } from './EventPanel';
+import { TeleopPanel, TimedEvent } from './TeleopPanel';
 import { EventList, MatchEvent } from './EventList';
 import { SandstormPanel } from './SandstormPanel';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
@@ -84,7 +84,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     return (
       <Content>
         <SandstormPanel onEvent={(e) => this.newEvent(e)}></SandstormPanel>
-        <EventPanel onEvent={(e) => this.newEvent(e)}></EventPanel>
+        <TeleopPanel onEvent={(e) => this.newEvent(e)}></TeleopPanel>
         <EventList start={this.state.matchStart} onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
         <View>
           <ReadyModal

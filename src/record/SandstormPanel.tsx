@@ -121,12 +121,23 @@ export class SandstormPanel extends Component<Props, State> {
     return (
       <View style={{ backgroundColor: "#fce38a", padding: 5 }}>
         <View>
-          <Row style={styles.row}>
-            <H3>IN SANDSTORM</H3>
-          </Row>
           <Grid>
-            <Col style={styles.leftColumn}>
-              <Row style={styles.row}>
+            <Row style={styles.row}>
+              <H3>IN SANDSTORM</H3>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
+                <Button large style={styles.eventButton}
+                  onPress={(x) => this.emitEvent(EventCode.SAND_CROSS_START)}>
+                  <Text>Crossed Start</Text>
+                </Button>
+              </Col>
+              <Col style={styles.rightColumn}>
+                {this.renderOTButton()}
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
                 <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreHatchRocket()}>
@@ -137,22 +148,8 @@ export class SandstormPanel extends Component<Props, State> {
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-              <Row style={styles.row}>
-                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_FLOOR)}>
-                    <Text>Floor</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_STATION)}>
-                    <Text>Station</Text>
-                  </Button>
-                </ButtonCard>
-              </Row>
-            </Col>
-            <Col style={styles.rightColumn}>
-              <Row style={styles.row}>
+              </Col>
+              <Col style={styles.rightColumn}>
                 <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.scoreCargoRocket()}>
@@ -163,8 +160,22 @@ export class SandstormPanel extends Component<Props, State> {
                     <Text>Ship</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-              <Row style={styles.row}>
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
+                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_FLOOR)}>
+                    <Text>Floor</Text>
+                  </Button>
+                  <Button large style={styles.eventButton}
+                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_STATION)}>
+                    <Text>Station</Text>
+                  </Button>
+                </ButtonCard>
+              </Col>
+              <Col style={styles.rightColumn}>
                 <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_FLOOR)}>
@@ -175,37 +186,22 @@ export class SandstormPanel extends Component<Props, State> {
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
-              </Row>
-            </Col>
-          </Grid>
-        </View>
-        <View>
-          <Grid>
-            <Col style={styles.leftColumn}>
-              <Row style={styles.row}>
+              </Col>
+            </Row>
+            <Row style={styles.row}>
+              <Col style={styles.leftColumn}>
                 <Button large style={styles.eventButton}
                   onPress={(x) => this.emitEvent(EventCode.SAND_DROP_HATCH)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
-              </Row>
-              <Row style={styles.row}>
-                <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.SAND_CROSS_START)}>
-                  <Text>Crossed Start</Text>
-                </Button>
-              </Row>
-            </Col>
-            <Col style={styles.rightColumn}>
-              <Row style={styles.row}>
+              </Col>
+              <Col style={styles.rightColumn}>
                 <Button large style={styles.eventButton}
                   onPress={(x) => this.emitEvent(EventCode.SAND_DROP_CARGO)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
-              </Row>
-              <Row style={styles.row}>
-                {this.renderOTButton()}
-              </Row>
-            </Col>
+              </Col>
+            </Row>
           </Grid>
         </View>
       </View>
@@ -215,17 +211,18 @@ export class SandstormPanel extends Component<Props, State> {
 
 const styles = StyleSheet.create({
   eventButton: {
-    margin: 5
+    margin: 5,
+    alignSelf: 'center'
   },
   row: {
-    alignContent: 'center',
     justifyContent: 'space-around',
   },
   leftColumn: {
     marginHorizontal: 5,
+    alignContent: 'center',
   },
   rightColumn: {
     marginHorizontal: 5,
-    alignContent: 'flex-start'
+    alignContent: 'center',
   }
 })
