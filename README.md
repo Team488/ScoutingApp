@@ -42,8 +42,6 @@ Create a match list with the time and a the team list in a CSV:
 
     Time, Red 1,Red 2,Red 3,Blue 1,Blue 2,Blue 3
 
-Use the QR Code generator here: https://keremerkan.net/qr-code-and-2d-code-generator/
-
 The app should load match data on start, but you can also reload the data from Settings -> Load Data.
 
 To push the sample match data to the device, run
@@ -51,8 +49,6 @@ To push the sample match data to the device, run
     adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
-- save match data to sdcard1
-- Put position in match data filename
 - Allow recording matches not on the list
 - Add match review list to home screen
 

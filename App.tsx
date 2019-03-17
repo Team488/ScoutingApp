@@ -37,7 +37,7 @@ type Stores = {
 async function requestFilePermission() {
   try {
     const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
         title: 'External storage permission',
         message:
@@ -69,13 +69,6 @@ export default class App extends React.Component {
   async componentDidMount() {
     await requestFilePermission();
     this.matchList.loadData();
-    /*
-    if (Orientation) {
-      Orientation.lockToPortrait();
-    } else {
-      console.warn('Orientation not available, unable to lock portrait.');
-    }
-    */
   };
 
   render() {

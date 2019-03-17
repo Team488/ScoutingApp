@@ -2,6 +2,8 @@
   package="com.scoutingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_MEDIA" />
 
     <application
       android:name=".MainApplication"
