@@ -23,14 +23,23 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
     }
   }
 
+  renderNextMatch() {
+    if(this.stores.matchList.matches.size == 0) {
+      return <H2 style={styles.nextMatch}>Match data not loaded</H2>;
+    } else {
+      return <NextMatch style={styles.nextMatch}
+        nextMatch={this.stores.matchList.nextMatch}></NextMatch>
+
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     AsyncStorage.getItem('matches', (err, result) => {console.log("Matches: ", result)});
     return (
       <Content>
         <View style={styles.panel}>
-          <NextMatch style={styles.nextMatch}
-            nextMatch={this.stores.matchList.nextMatch}></NextMatch>
+          {this.renderNextMatch()}
           <Button 
             large bordered
             style={styles.matchButton}
@@ -51,13 +60,13 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
 }
 
 type Props = {
-  nextMatch: Match
+  nextMatch?: Match
   style: StyleProp 
 }
 class NextMatch extends React.Component<Props> {
   render() {
     if (!this.props.nextMatch) {
-      return <H2 style={this.props.style}>Match data not loaded</H2>;
+      return <H2 style={this.props.style}>No Team 488 matches on the schedule</H2>;
     }
 
     const time = moment(this.props.nextMatch.time).format("D-MMM hh:mm A")
