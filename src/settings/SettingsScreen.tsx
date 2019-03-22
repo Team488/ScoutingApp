@@ -3,7 +3,7 @@ import {Header} from 'react-navigation';
 import { View, Alert, AsyncStorage} from 'react-native';
 import { Button, Content, Grid, Row, Col, Picker, Text } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-import { connect, ConnectedComponent, MatchList, Position } from '../store';
+import { connect, ConnectedComponent, MatchHistory, MatchList, Position } from '../store';
 import { observer } from 'mobx-react';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 import RNFS from 'react-native-fs'
@@ -14,9 +14,10 @@ type State = {
 
 type Store = {
   matchList: MatchList
+  matchHistory: MatchHistory
 }
 
-@connect("matchList")
+@connect("matchList", "matchHistory")
 @observer
 export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, Store, State> {
   static navigationOptions = ({navigation}:any) => {
@@ -48,7 +49,7 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
       'Really delete all the saved match data? This can\'t be undone!',
       [
         { text: 'Cancel', style: 'cancel', },
-        {text: 'OK', onPress: () => AsyncStorage.removeItem('matches')},
+        {text: 'OK', onPress: () => this.stores.matchHistory.clearHistory()},
       ],
       {cancelable: false},
     );

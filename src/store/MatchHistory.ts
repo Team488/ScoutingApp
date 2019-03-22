@@ -33,8 +33,13 @@ export class MatchHistory {
       console.log("Mapped: ", history);
       runInAction(() => {
         history.forEach((v) => this.history.set(v[0], v[1]))
-        //this.history = observable.map([...history]);
       })
     }
+  }
+
+  @action
+  clearHistory() {
+    this.history.clear();
+    AsyncStorage.removeItem('matches')
   }
 }
