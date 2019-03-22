@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header} from 'react-navigation';
-import { View, AsyncStorage} from 'react-native';
+import { View, Alert, AsyncStorage} from 'react-native';
 import { Button, Content, Grid, Row, Col, Picker, Text } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { connect, ConnectedComponent, MatchList, Position } from '../store';
@@ -42,6 +42,18 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
     await RNFS.writeFile(`${RNFS.ExternalStorageDirectoryPath}/${filename}`, contents);
   }
 
+  clearMatchData() {
+    Alert.alert(
+      'Are you sure?',
+      'Really delete all the saved match data? This can\'t be undone!',
+      [
+        { text: 'Cancel', style: 'cancel', },
+        {text: 'OK', onPress: () => AsyncStorage.removeItem('matches')},
+      ],
+      {cancelable: false},
+    );
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -65,6 +77,7 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
         <Text>Save all match data to a text file. The filename includes the position.</Text>
         <Text>You can grab it with 'adb pull /sdcard/match_data_red_1.txt'</Text>
         <Button onPress={() => this.saveMatchData()}><Text>Save Match Data</Text></Button>      
+        <Button onPress={() => this.clearMatchData()}><Text>Clear Match Data</Text></Button>      
       </Content>
     );
   }

@@ -42,7 +42,7 @@ export class ReadyModal extends Component<Props> {
           <Content style={{ backgroundColor: 'white', flex: 1 }}>
             <View style={{ margin: 20 }}>
               <Text style={{ margin: 20 }}>When the match starts, watch Team {this.props.team}!</Text>
-              <Text style={{ margin: 20 }}>Before we start, which position is the robot starting in?</Text>
+              <Text style={{ margin: 20 }}>Before we start, which level is the robot starting on?</Text>
               <Picker
                 style={{ margin: 20 }}
                 mode="dropdown"

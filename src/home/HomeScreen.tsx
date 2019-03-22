@@ -1,17 +1,19 @@
 import React from 'react';
-import RN, { StyleProp, StyleSheet, View, AsyncStorage } from 'react-native';
+import RN, { StyleProp, StyleSheet, View, AsyncStorage, ViewStyle } from 'react-native';
 import { Button, Body, Content, Grid, Icon, H2,  Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
-import { connect, ConnectedComponent, MatchList, Match } from '../store';
+import { connect, ConnectedComponent, MatchList, MatchHistory, Match } from '../store';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
+import { ReviewMatchList } from './ReviewMatchList';
 import moment from 'moment';
 
 interface Stores {
   matchList: MatchList;
+  matchHistory: MatchHistory;
 }
 
-@connect("matchList")
+@connect("matchList", "matchHistory")
 @observer
 export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores> {
   static navigationOptions = ({navigation}:any) => {
@@ -53,6 +55,12 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
             onPress={() => navigate("Settings")}>
             <Text>Settings</Text>
           </Button>
+          <ReviewMatchList 
+            selectedMatch={(match) => {
+              console.log('Navigating to match', match);
+              navigate("ViewMatch", {match}); }}
+            style={styles.reviewList}
+            history={[...this.stores.matchHistory.history].map((v) => v[1])}></ReviewMatchList>
         </View>
       </Content>
     );
@@ -60,8 +68,8 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
 }
 
 type Props = {
-  nextMatch?: Match
-  style: StyleProp 
+  nextMatch?: Match;
+  style: StyleProp<ViewStyle>;
 }
 class NextMatch extends React.Component<Props> {
   render() {
@@ -82,6 +90,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignContent: 'center',
     justifyContent: 'space-between',
+  },
+  reviewList: {
+   marginTop: 30,
+   margin: 10,
   },
   nextMatch: {
    marginTop: 30,

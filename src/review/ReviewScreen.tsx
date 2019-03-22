@@ -5,13 +5,22 @@ import { Container, Content, H1, H2, H3, Grid, Icon, Left, List, ListItem, Picke
 import QRCode from 'react-native-qrcode-svg';
 import { MatchEvent, EventList } from '../record/EventList';
 import { EventCode } from '../record/Events';
+import { connect, ConnectedComponent, MatchHistory, Position } from '../store';
+import { observer } from 'mobx-react';
 
 type State = {
   eventData: string,
   ended: number,
   lifted: number
 }
-export class ReviewScreen extends React.Component<NavigationScreenProps, State> {
+
+type Store = {
+  matchHistory: MatchHistory
+}
+
+@connect('matchHistory')
+@observer
+export class ReviewScreen extends ConnectedComponent<NavigationScreenProps, Store, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -43,9 +52,12 @@ export class ReviewScreen extends React.Component<NavigationScreenProps, State> 
     }
     finishEvents += `${lastTimestamp} ${this.state.ended}`;
     const matchData = `${match} ${team}$${eventList}$${finishEvents}%`;
-    let data = {} as {[index:string]: string};
-    data[match] = matchData;
-    AsyncStorage.mergeItem('matches', JSON.stringify(data));
+    this.stores.matchHistory.saveMatch({
+      id: match,
+      team,
+      time: start,
+      data: matchData, 
+    });
     return matchData;
   }
 

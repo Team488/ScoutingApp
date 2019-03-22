@@ -12,7 +12,8 @@ import { StartScreen } from './src/start/StartScreen';
 import { RecordScreen } from './src/record/RecordScreen';
 import { ReviewScreen } from './src/review/ReviewScreen';
 import { SettingsScreen } from './src/settings/SettingsScreen';
-import { MatchList } from './src/store';
+import { ViewMatchScreen } from './src/view_match/ViewMatchScreen';
+import { MatchHistory, MatchList } from './src/store';
 import { PermissionsAndroid } from 'react-native';
 
 const AppNavigator = createStackNavigator({
@@ -21,6 +22,7 @@ const AppNavigator = createStackNavigator({
   Record: RecordScreen,
   Review: ReviewScreen,
   Settings: SettingsScreen, 
+  ViewMatch: ViewMatchScreen, 
 },
   {
     initialRouteName: "Home"
@@ -59,21 +61,24 @@ async function requestFilePermission() {
 export default class App extends React.Component {
   stores: Stores = {};
   matchList: MatchList;
+  matchHistory: MatchHistory;
 
   constructor(props: any) {
     super(props);
 
     this.matchList = new MatchList();
+    this.matchHistory = new MatchHistory();
   }
 
   async componentDidMount() {
     await requestFilePermission();
     this.matchList.loadData();
+    this.matchHistory.loadMatchHistory();
   };
 
   render() {
     return (<Root>
-      <Provider {...{matchList: this.matchList}}>
+      <Provider {...{matchList: this.matchList, matchHistory: this.matchHistory}}>
         <AppContainer persistenceKey={"NavigationState"} />
       </Provider>
     </Root>);
