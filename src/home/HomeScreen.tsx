@@ -51,6 +51,13 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
           </Button>
           <Button 
             large bordered
+            style={styles.matchButton}
+            onPress={() => navigate('StartUnlisted')}
+          >
+            <Text>Record unlisted match</Text>
+          </Button>
+          <Button 
+            large bordered
             style={styles.settingsButton}
             onPress={() => navigate("Settings")}>
             <Text>Settings</Text>
@@ -100,11 +107,11 @@ const styles = StyleSheet.create({
    alignSelf: "center"
   },
   matchButton: {
-    marginTop: 50,
+    marginTop: 40,
    alignSelf: "center"
   },
   settingsButton: {
-    marginTop: 50,
+    marginTop: 40,
    alignSelf: "center"
   }
 })

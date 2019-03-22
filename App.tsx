@@ -9,6 +9,7 @@ import { Root } from 'native-base';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { HomeScreen } from './src/home/HomeScreen';
 import { StartScreen } from './src/start/StartScreen';
+import { StartUnlistedScreen } from './src/start/StartUnlistedScreen';
 import { RecordScreen } from './src/record/RecordScreen';
 import { ReviewScreen } from './src/review/ReviewScreen';
 import { SettingsScreen } from './src/settings/SettingsScreen';
@@ -19,6 +20,7 @@ import { PermissionsAndroid } from 'react-native';
 const AppNavigator = createStackNavigator({
   Home: HomeScreen,
   Start: StartScreen,
+  StartUnlisted: StartUnlistedScreen,
   Record: RecordScreen,
   Review: ReviewScreen,
   Settings: SettingsScreen, 

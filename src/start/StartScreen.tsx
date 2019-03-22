@@ -1,8 +1,9 @@
 import React, { Ref } from 'react';
 import { FlatList, View, ListRenderItemInfo, StyleSheet } from 'react-native';
-import { Button, Content, Body, Left, List, ListItem, Icon, Grid, Row, Col, Header, Form, Picker, Right, Text, Title } from 'native-base';
+import { Button, Content, Body, Left, List, ListItem, Icon, Grid, Row, Col, Input, Item, Label, Header, Form, Picker, Right, Text, Title } from 'native-base';
 import { NavigationScreenProps } from 'react-navigation';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
+import { StartUnlistedMatch } from './StartUnlistedMatch';
 import { connect, ConnectedComponent, Match, MatchList, Position } from '../store';
 import { observer } from 'mobx-react';
 import moment from 'moment';
@@ -93,7 +94,8 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
 
   render() {
     const { navigate } = this.props.navigation;
-    const selectedMatch = this.stores.matchList.matches.get(this.state.selected) || {id: "None selected"};
+    const selectedMatch = this.stores.matchList.matches.get(this.state.selected) || { id: "None selected" };
+
     return (
       <Content>
         <Grid>
@@ -113,7 +115,7 @@ export class StartScreen extends ConnectedComponent<NavigationScreenProps, Store
               </Button>
               <Right>
                 <Button disabled={this.state.selected < 0} large block style={{ alignSelf: "flex-end" }}
-                  onPress={() => navigate('Record', {match: selectedMatch.id, team: this.getTeam()})}>
+                  onPress={() => navigate('Record', { match: selectedMatch.id, team: this.getTeam() })}>
                   <Text>Ready</Text>
                 </Button>
               </Right>

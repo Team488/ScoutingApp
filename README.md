@@ -49,9 +49,6 @@ To push the sample match data to the device, run
     adb push sample_match_list.csv /sdcard/match_list.csv
 
 # TODO
-- Allow recording matches not on the list
-- Add match review list to home screen
-
 - Convert eventList to flatlist, or at least to a fixed list
 - debounce button inputs
 - Separate undo/redo button?
