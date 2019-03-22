@@ -37,7 +37,7 @@ export class SettingsScreen extends ConnectedComponent<NavigationScreenProps, St
 
   async saveMatchData() {
     const matches = JSON.parse(await AsyncStorage.getItem('matches'));
-    const contents = Object.values(matches).join('\n') + '\n';
+    const contents = Object.values(matches).map((m) => m.data).join('\n') + '\n';
     const posName = this.stores.matchList.position.toLowerCase().replace(' ','_');
     const filename = `match_data_${posName}.txt`;
     await RNFS.writeFile(`${RNFS.ExternalStorageDirectoryPath}/${filename}`, contents);

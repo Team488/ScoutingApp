@@ -27,10 +27,8 @@ export class MatchHistory {
   @action
   async loadMatchHistory() {
     const historyJSON = await AsyncStorage.getItem('matches');
-    console.log("History: ", historyJSON);
     if (historyJSON) {
       const history = Object.values(JSON.parse(historyJSON)).map((v: History) => [v.id, v]) as [number, History][];
-      console.log("Mapped: ", history);
       runInAction(() => {
         history.forEach((v) => this.history.set(v[0], v[1]))
       })
