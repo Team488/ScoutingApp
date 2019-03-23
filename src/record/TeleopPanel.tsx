@@ -172,11 +172,11 @@ export class TeleopPanel extends Component<Props, State> {
               <Col style={styles.leftColumn}>
                 <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_FLOOR)}>
+                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_FLOOR)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_HATCH_STATION)}>
+                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_STATION)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -184,11 +184,11 @@ export class TeleopPanel extends Component<Props, State> {
               <Col style={styles.rightColumn}>
                 <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_FLOOR)}>
+                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_FLOOR)}>
                     <Text>Floor</Text>
                   </Button>
                   <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.SAND_CARGO_STATION)}>
+                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_STATION)}>
                     <Text>Station</Text>
                   </Button>
                 </ButtonCard>
@@ -197,13 +197,13 @@ export class TeleopPanel extends Component<Props, State> {
             <Row style={styles.row}>
               <Col style={styles.leftColumn}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_HATCH)}>
+                  onPress={(x) => this.emitEvent(EventCode.DROP_HATCH)}>
                   <Text>Dropped Hatch</Text>
                 </Button>
               </Col>
               <Col style={styles.rightColumn}>
                 <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.SAND_DROP_CARGO)}>
+                  onPress={(x) => this.emitEvent(EventCode.DROP_CARGO)}>
                   <Text>Dropped Cargo</Text>
                 </Button>
               </Col>
