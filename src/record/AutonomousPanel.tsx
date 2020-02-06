@@ -22,7 +22,7 @@ type State = {
 interface Props {
   onEvent: (event: TimedEvent) => void
 }
-export class SandstormPanel extends Component<Props, State> {
+export class AutonomousPanel extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -123,7 +123,7 @@ export class SandstormPanel extends Component<Props, State> {
         <View>
           <Grid>
             <Row style={styles.row}>
-              <H3>IN SANDSTORM</H3>
+              <H3>AUTONOMOUS</H3>
             </Row>
             <Row style={styles.row}>
               <Col style={styles.leftColumn}>
@@ -132,9 +132,11 @@ export class SandstormPanel extends Component<Props, State> {
                   <Text>Crossed Start</Text>
                 </Button>
               </Col>
+{/*
               <Col style={styles.rightColumn}>
                 {this.renderOTButton()}
               </Col>
+*/}
             </Row>
             <Row style={styles.row}>
               <Col style={styles.leftColumn}>

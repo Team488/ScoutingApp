@@ -41,6 +41,7 @@ export class HomeScreen extends ConnectedComponent<NavigationScreenProps, Stores
     return (
       <Content>
         <View style={styles.panel}>
+          <H2 style={styles.nextMatch}>Infinite Recharg 2020</H2>
           {this.renderNextMatch()}
           <Button 
             large bordered
