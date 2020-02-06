@@ -42,18 +42,19 @@ export class ReadyModal extends Component<Props> {
           <Content style={{ backgroundColor: 'white', flex: 1 }}>
             <View style={{ margin: 20 }}>
               <Text style={{ margin: 20 }}>When the match starts, watch Team {this.props.team}!</Text>
-              <Text style={{ margin: 20 }}>Before we start, which level is the robot starting on?</Text>
+              <Text style={{ margin: 20 }}>Before we start, how many power cells are preloaded?</Text>
               <Picker
                 style={{ margin: 20 }}
                 mode="dropdown"
                 selectedValue={this.state.position}
                 onValueChange={(v) => {
-                  console.log("Set pos ", v)
+                  console.log("Set num power cells ", v)
                   this.setState({ position: v })
                 }}
               >
-                <Picker.Item label="Level 1" value={EventCode.START_1} />
-                <Picker.Item label="Level 2" value={EventCode.START_2} />
+                <Picker.Item label="1 Power Cell" value={EventCode.START_1} />
+                <Picker.Item label="2 Power Cells" value={EventCode.START_2} />
+                <Picker.Item label="3 Power Cells" value={EventCode.START_3} />
               </Picker>
               <Button
                 style={{ alignSelf: "center" }}
