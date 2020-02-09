@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Vibration, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, Vibration, View } from 'react-native';
 import {
   ActionSheet, Button, Col, Content, Grid, H3, Row, Text
 } from 'native-base';
-import ButtonCard from './ButtonCard';
 import { EventCode } from './Events';
 
 export interface TimedEvent {
@@ -54,25 +53,6 @@ export class TeleopPanel extends Component<Props, State> {
     </Button>)
   }
 
-  renderOTButton() {
-    if (this.state.inOpposingTerritory) {
-      return (<Button large style={styles.eventButton}
-        onPress={(x) => {
-          this.setState({ inOpposingTerritory: false });
-          this.emitEvent(EventCode.LEAVE_OT);
-        }}>
-        <Text>Left OT</Text>
-      </Button>)
-    }
-    return (<Button large style={styles.eventButton}
-      onPress={(x) => {
-        this.setState({ inOpposingTerritory: true });
-        this.emitEvent(EventCode.ENTER_OT);
-      }}>
-      <Text>Entered OT</Text>
-    </Button>)
-  }
-
   showDialog(title: string, options: { [index: string]: number }) {
     const cancelIdx = Object.keys(options).length;
     const timestamp = Date.now();
@@ -92,131 +72,137 @@ export class TeleopPanel extends Component<Props, State> {
     )
   }
 
-  scoreHatchRocket() {
+  robotClimbed() {
     this.showDialog(
-      "Where on the ROCKET was the HATCH scored?",
+      "What was the state of the bar when the robot climbed?",
       {
-        "FRONT TOP": EventCode.HATCH_FRONT_TOP,
-        "FRONT MIDDLE": EventCode.HATCH_FRONT_MID,
-        "FRONT BOTTOM": EventCode.HATCH_FRONT_BOT,
-        "BACK TOP": EventCode.HATCH_BACK_TOP,
-        "BACK MIDDLE": EventCode.HATCH_BACK_MID,
-        "BACK BOTTOM": EventCode.HATCH_BACK_BOT,
+        "Level": EventCode.CLIMB_LEVEL,
+        "Tilted": EventCode.CLIMB_TILTED
       }
     )
   }
 
-  scoreHatchShip() {
+  robotFailedClimb() {
     this.showDialog(
-      "Where on the SHIP was the HATCH scored?",
+      "What was the state of the bar when the robot failed to climb?",
       {
-        "FRONT": EventCode.HATCH_SHIP_FRONT,
-        "SIDE": EventCode.HATCH_SHIP_SIDE
-      })
+        "Level": EventCode.FAILED_LEVEL,
+        "Tilted": EventCode.FAILED_TILTED
+      }
+    )
   }
 
-  scoreCargoRocket() {
+  robotLifted() {
     this.showDialog(
-      "Where on the ROCKET was the CARGO scored?",
+      "How many robots were lifted?",
       {
-        "TOP": EventCode.CARGO_TOP,
-        "MIDDLE": EventCode.CARGO_MID,
-        "BOTTOM": EventCode.CARGO_BOT
-      });
+        "1 Robot": EventCode.LIFTED_1,
+        "2 Robots": EventCode.LIFTED_2
+      }
+    )
   }
 
-  scoreCargoShip() {
-    this.showDialog(
-      "Where on the SHIP was the CARGO scored?",
-      {
-        "FRONT": EventCode.CARGO_SHIP_FRONT,
-        "SIDE": EventCode.CARGO_SHIP_SIDE
-      })
-  }
 
   render() {
     return (
       <View style={{ backgroundColor: "#95e1d3", padding: 5 }}>
         <View>
           <Row style={styles.row}>
-            <H3>IN TELEOP</H3>
+            <H3>TELEOP</H3>
           </Row>
-          <Grid>
-            <Row style={styles.row}>
-              <Col style={styles.leftColumn}>
-                <ButtonCard title="Scored HATCH on" style={{ backgroundColor: "#f38181" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreHatchRocket()}>
-                    <Text>Rocket</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreHatchShip()}>
-                    <Text>Ship</Text>
-                  </Button>
-                </ButtonCard>
-              </Col>
-              <Col style={styles.rightColumn}>
-                <ButtonCard title="Scored CARGO on" style={{ backgroundColor: "#eaffd0" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreCargoRocket()}>
-                    <Text>Rocket</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.scoreCargoShip()}>
-                    <Text>Ship</Text>
-                  </Button>
-                </ButtonCard>
-              </Col>
-            </Row>
-            <Row style={styles.row}>
-              <Col style={styles.leftColumn}>
-                <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_FLOOR)}>
-                    <Text>Floor</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_STATION)}>
-                    <Text>Station</Text>
-                  </Button>
-                </ButtonCard>
-              </Col>
-              <Col style={styles.rightColumn}>
-                <ButtonCard title="Grabbed CARGO from" style={{ backgroundColor: "#eaffd0" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_FLOOR)}>
-                    <Text>Floor</Text>
-                  </Button>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_CARGO_STATION)}>
-                    <Text>Station</Text>
-                  </Button>
-                </ButtonCard>
-              </Col>
-            </Row>
-            <Row style={styles.row}>
-              <Col style={styles.leftColumn}>
-                <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.DROP_HATCH)}>
-                  <Text>Dropped Hatch</Text>
-                </Button>
-              </Col>
-              <Col style={styles.rightColumn}>
-                <Button large style={styles.eventButton}
-                  onPress={(x) => this.emitEvent(EventCode.DROP_CARGO)}>
-                  <Text>Dropped Cargo</Text>
-                </Button>
-              </Col>
-            </Row>
-            <Row style={styles.row}>
-              <Col style={styles.leftColumn}>
-                {this.renderDisabledButton()}
-              </Col>
-              <Col style={styles.rightColumn}>
-                {this.renderOTButton()}
-              </Col>
-            </Row>
-          </Grid>
+          <Row style={styles.row}>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.T_MISS_SHOT)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Shot{'\n'}Missed
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.T_SHOT_LOW)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Made{'\n'}Lower
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.T_SHOT_OUTER)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Made{'\n'}Outer
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.T_SHOT_INNER)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Made{'\n'}Inner
+              </Text>
+            </TouchableOpacity>
+          </Row>
+          <Row style={styles.row}>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.T_INTAKE_BALL)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Intake{'\n'}Ball
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.SPIN_WHEEL)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Spin{'\n'}Control
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.SET_WHEEL_COLOR)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Set{'\n'}Color
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.THROUGH_TRENCH)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Went{'\n'}Under{'\n'}Trench
+              </Text>
+            </TouchableOpacity>
+          </Row>
+          <Row style={styles.row}>
+            <TouchableOpacity
+              onPress={(x) => this.emitEvent(EventCode.NO_TRY_CLIMB)}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Didn't{'\n'}Try To{'\n'}Climb
+              </Text>
+            </TouchableOpacity>
+            {this.renderDisabledButton()}
+          </Row>
+          <Row style={styles.row}>
+          <TouchableOpacity
+              onPress={(x) => this.robotFailedClimb()}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Failed{'\n'}Climb
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.robotClimbed()}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Climbed
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={(x) => this.robotLifted()}
+              style={styles.squareButton} >
+              <Text style={styles.buttonText}>
+                Lifted{'\n'}Robot(s)
+              </Text>
+            </TouchableOpacity>
+          </Row>
         </View>
       </View>
     )
@@ -231,6 +217,7 @@ const styles = StyleSheet.create({
   row: {
     alignContent: 'center',
     justifyContent: 'space-around',
+    margin: 5
   },
   leftColumn: {
     marginHorizontal: 5,
@@ -238,5 +225,20 @@ const styles = StyleSheet.create({
   rightColumn: {
     marginHorizontal: 5,
     alignContent: 'flex-start'
+  },
+  squareButton: {
+    borderRadius: 8,
+    padding: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#333333',
+    height: 100,
+    width: 100
+  },
+  buttonText: {
+    fontSize: 20,
+    textTransform: 'capitalize',
+    textAlign: 'center',
+    color: '#FFFFFF'
   }
 })
