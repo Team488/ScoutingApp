@@ -8,7 +8,6 @@ import {
   Row, Icon, Title, Text
 } from 'native-base';
 import { AppRegistry, Image } from 'react-native';
-import DetailModal from './ReadyModal';
 
 type Props = {
   title: string,
@@ -26,7 +25,6 @@ export default class ButtonCard extends Component<Props> {
     )
   }
 }
-
 
 const styles = StyleSheet.create({
   panelTitle: {

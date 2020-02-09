@@ -8,7 +8,6 @@ import {
   Row, Icon, Title, Text
 } from 'native-base';
 import { AppRegistry, Image } from 'react-native';
-import DetailModal from './ReadyModal';
 
 type State = {
   time: number

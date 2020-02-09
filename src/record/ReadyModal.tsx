@@ -13,7 +13,7 @@ export class ReadyModal extends Component<Props> {
   state = {
     isModalVisible: false,
     hardClose: false,
-    position: EventCode.START_1
+    position: EventCode.START_3
   };
 
   _toggleModal = () => {
@@ -52,6 +52,7 @@ export class ReadyModal extends Component<Props> {
                   this.setState({ position: v })
                 }}
               >
+                <Picker.Item label="0 Power Cells" value={EventCode.START_0} />
                 <Picker.Item label="1 Power Cell" value={EventCode.START_1} />
                 <Picker.Item label="2 Power Cells" value={EventCode.START_2} />
                 <Picker.Item label="3 Power Cells" value={EventCode.START_3} />
