@@ -1,6 +1,6 @@
 import React, { Component, ReactPropTypes } from "react";
 import { Text, TouchableOpacity, View, GestureResponderEvent } from "react-native";
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import Modal from "react-native-modal";
 
 type Props = {

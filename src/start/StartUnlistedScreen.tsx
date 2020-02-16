@@ -1,7 +1,7 @@
 import React, { Ref } from 'react';
 import { FlatList, View, Alert, ListRenderItemInfo, StyleProp, ViewStyle, StyleSheet } from 'react-native';
 import { Button, Content, Body, H1, H2, Left, List, ListItem, Icon, Grid, Row, Col, Input, Item, Label, Header, Form, Picker, Right, Text, Title } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 import { inject, observer } from 'mobx-react';
 import { connect, ConnectedComponent, MatchList, MatchHistory, Match } from '../store';

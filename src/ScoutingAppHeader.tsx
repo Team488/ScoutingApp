@@ -1,7 +1,6 @@
 import React from 'react';
 import RN, { View } from 'react-native';
 import { Button, Body, Content, Grid, Icon, Header, Left, Right, Row, Col, Text, Title } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
 import { connect, ConnectedComponent, MatchList } from './store'
 

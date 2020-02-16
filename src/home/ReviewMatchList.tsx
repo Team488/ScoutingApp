@@ -1,7 +1,6 @@
 import React from 'react';
 import RN, { FlatList, ListRenderItemInfo, StyleProp, View, ViewStyle } from 'react-native';
 import { Button, Body, Content, Grid, ListItem, Icon, H2, Header, Left, Right, Row, Col, Text, Title } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
 import { History } from '../store';
 import moment from 'moment';

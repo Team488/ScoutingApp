@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import { TeleopPanel, TimedEvent } from './TeleopPanel';
 import { EventList, MatchEvent } from './EventList';
 import { AutonomousPanel } from './AutonomousPanel';

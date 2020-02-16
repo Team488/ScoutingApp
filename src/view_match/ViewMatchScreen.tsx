@@ -1,6 +1,7 @@
 import React from 'react';
-import { AsyncStorage, Button, Text, View } from 'react-native';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+import { Button, Text, View } from 'react-native';
+import { NavigationActions, NavigationScreenProps } from 'react-navigation';
 import { Container, Content, H1, H2, H3, Grid, Icon, Left, List, ListItem, Picker, Right, Row } from 'native-base';
 import QRCode from 'react-native-qrcode-svg';
 import { MatchEvent, EventList } from '../record/EventList';
