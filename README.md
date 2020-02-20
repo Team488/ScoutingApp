@@ -52,6 +52,18 @@ To push the sample match data to the device, run
 
     adb push sample_match_list.csv /sdcard/match_list.csv
 
+# Versions
+
+React Native: 0.60.6
+MobX: 5.0
+
+React Native includes a faster JS engine, called Hermes. Unfortunately, Hermes is
+incompatible with MobX 5.0 ([see this](https://github.com/facebook/hermes/issues/28)).
+Instead, we're using v8 with https://github.com/Kudo/react-native-v8
+
+IMPORTANT: Because we're doing something nonstandard and using v8 instead of JSCore,
+it's possible we could have weird issues.
+
 # TODO
 - Convert eventList to flatlist, or at least to a fixed list
 - debounce button inputs
