@@ -4,9 +4,13 @@ Follow the instructions [here]() to install Android Studio and React Native.
 
 Start the app with 
 
+    react-native start&
     react-native run-android
 
-This will install the dev version of the app on any connected device or simulator.
+This will install the dev version of the app on any connected device or simulator. WARNING: You
+have to run `start` *before* running `run-android`. If you do it the other way, the app will
+get stuck on a white screen (see [react-native#26605](https://github.com/facebook/react-native/issues/26605))
+
 With the app running, you can run 
 
     adb shell input keyevent 82
