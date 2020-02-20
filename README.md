@@ -54,7 +54,7 @@ To push the sample match data to the device, run
 
 # Versions
 
-React Native: 0.60.6
+React Native: 0.61.5
 MobX: 5.0
 
 React Native includes a faster JS engine, called Hermes. Unfortunately, Hermes is
