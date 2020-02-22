@@ -1,8 +1,5 @@
-import RNFS from 'react-native-fs';
-import { action, computed, observable, runInAction } from 'mobx';
-import { AsyncStorage } from 'react-native';
-import { Match } from './MatchList';
-import moment from 'moment';
+import { action, observable, runInAction } from 'mobx';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export interface History {
   id: number,

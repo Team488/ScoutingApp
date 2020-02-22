@@ -1,6 +1,7 @@
 import React from 'react';
-import { AsyncStorage, Button, Text, View } from 'react-native';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import { Button, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationScreenProps } from 'react-navigation';
 import { Container, Content, H1, H2, H3, Grid, Icon, Left, List, ListItem, Picker, Right, Row } from 'native-base';
 import QRCode from 'react-native-qrcode-svg';
 import { MatchEvent, EventList } from '../record/EventList';
@@ -25,7 +26,7 @@ export class ReviewScreen extends ConnectedComponent<NavigationScreenProps, Stor
     super(props);
     this.state = {
       eventData: '%',
-      ended: EventCode.ENDED_1,
+      ended: EventCode.NO_TRY_CLIMB,
       lifted: 0,
     }
   }
@@ -66,34 +67,9 @@ export class ReviewScreen extends ConnectedComponent<NavigationScreenProps, Stor
     const eventData = this.renderEvents();
     return (
       <Content style={{margin: 20}}>
-        <H1>Review The Match</H1>
+        <H1>Match Data Recorded</H1>
 
-        <H3 style={{ marginTop: 20 }}>Did the robot lift a teammate to a finish position?</H3>
-        <Picker
-          mode="dropdown"
-          placeholder="lifted to"
-          selectedValue={this.state.lifted}
-          onValueChange={(v) => {
-            this.setState({ lifted: v })
-          }}
-        >
-          <Picker.Item label="None" value={0} />
-          <Picker.Item label="Level 2" value={EventCode.LIFTED_2} />
-          <Picker.Item label="Level 3" value={EventCode.LIFTED_3} />
-        </Picker>
-        <H3 style={{ marginTop: 20 }}>Which level did the robot end on?</H3>
-        <Picker
-          mode="dropdown"
-          placeholder="ending position"
-          selectedValue={this.state.ended}
-          onValueChange={(v) => {
-            this.setState({ ended: v })
-          }}
-        >
-          <Picker.Item label="Level 1" value={EventCode.ENDED_1} />
-          <Picker.Item label="Level 2" value={EventCode.ENDED_2} />
-          <Picker.Item label="Level 3" value={EventCode.ENDED_3} />
-        </Picker>
+        <H3 style={{ marginTop: 20 }}>Use the QR code below to scan data into data processing computer.</H3>
         <View style={{ marginTop: 20, alignSelf: "center" }}>
           <QRCode size={500} value={eventData}></QRCode>
 

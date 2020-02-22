@@ -79,7 +79,8 @@ export default class App extends React.Component {
   };
 
   render() {
-    return (<Root>
+    return (
+    <Root>
       <Provider {...{matchList: this.matchList, matchHistory: this.matchHistory}}>
         <AppContainer persistenceKey={"NavigationState"} />
       </Provider>

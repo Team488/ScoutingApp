@@ -1,8 +1,6 @@
 import React, { Component, ReactPropTypes } from "react";
-import { FlatList, Text, TouchableOpacity, View, GestureResponderEvent, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import { Button, Content, Icon, Left, List, ListItem, Right } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
-import Modal from "react-native-modal";
 import { EventTypes } from './Events';
 
 export interface MatchEvent {

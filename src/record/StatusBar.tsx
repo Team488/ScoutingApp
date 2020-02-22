@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import QRCode from 'react-native-qrcode-svg';
-import { StyleSheet, StyleProp, Vibration, View, ViewStyle } from 'react-native';
-import Modal from "react-native-modal";
-import {
-  ActionSheet, Button, Body, Left, Card, CardItem, Col,
-  Container, Content, Grid, Header, List, ListItem,
-  Row, Icon, Title, Text
-} from 'native-base';
-import { AppRegistry, Image } from 'react-native';
-import DetailModal from './ReadyModal';
+import { StyleSheet, View, ViewStyle } from 'react-native';
+import { Text } from 'native-base';
 
 type State = {
   time: number

@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
-import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
+import { NavigationScreenProps } from 'react-navigation';
 import { TeleopPanel, TimedEvent } from './TeleopPanel';
 import { EventList, MatchEvent } from './EventList';
-import { SandstormPanel } from './SandstormPanel';
+import { AutonomousPanel } from './AutonomousPanel';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 import { ReadyModal } from './ReadyModal';
 
@@ -21,7 +21,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     super(props);
     this.state = {
       events: [],
-      showDialog: true,
+      showDialog: true, //We have the option to show a dialog at the start of the match, in 2020 we check to see # of balls loaded
       matchStart: Date.now()
     }
   }
@@ -71,6 +71,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     this.setState({showDialog: false});
     // If the initial dialog is cancelled with nothing selected, that means the back button was pressed. If that happens,
     // skip everything and just go back to the selection screen.
+    // What if the screen was touched outside of the dialog? Need to handle that too.
     if (!positionEvent) {
       this.props.navigation.goBack();
       return;
@@ -83,7 +84,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
     const { navigate } = this.props.navigation;
     return (
       <Content>
-        <SandstormPanel onEvent={(e) => this.newEvent(e)}></SandstormPanel>
+        <AutonomousPanel onEvent={(e) => this.newEvent(e)}></AutonomousPanel>
         <TeleopPanel onEvent={(e) => this.newEvent(e)}></TeleopPanel>
         <EventList start={this.state.matchStart} onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
         <View>
