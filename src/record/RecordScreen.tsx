@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, Button, Container, Content, Header, Left, Icon, Right, Title, Text, View } from 'native-base';
+import { Button, Content, Text, View } from 'native-base';
 import { NavigationScreenProps } from 'react-navigation';
-import { TeleopPanel, TimedEvent } from './TeleopPanel';
 import { EventList, MatchEvent } from './EventList';
 import { AutonomousPanel } from './AutonomousPanel';
+import { TeleopPanel, TimedEvent } from './TeleopPanel';
+import { EndGamePanel } from './EndGamePanel';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 import { ReadyModal } from './ReadyModal';
 
@@ -86,6 +87,7 @@ export class RecordScreen extends React.Component<NavigationScreenProps, State> 
       <Content>
         <AutonomousPanel onEvent={(e) => this.newEvent(e)}></AutonomousPanel>
         <TeleopPanel onEvent={(e) => this.newEvent(e)}></TeleopPanel>
+        <EndGamePanel onEvent={(e) => this.newEvent(e)}></EndGamePanel>
         <EventList start={this.state.matchStart} onDeleteEvent={(id:number) => this.deleteEvent(id)} events={this.state.events}></EventList>
         <View>
           <ReadyModal

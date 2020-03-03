@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react';
 import {Provider}  from 'mobx-react';
-import { Button, Text, View } from 'react-native';
 import { Root } from 'native-base';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { HomeScreen } from './src/home/HomeScreen';

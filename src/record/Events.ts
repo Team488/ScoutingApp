@@ -8,30 +8,31 @@ type MatchEvent = {
 
 export const EventTypes: { [index: string]: MatchEvent } = {
   // Pre-match
-  10: { phase: "pre-match", description: "Robot held 0 Balls at start" },
-  11: { phase: "pre-match", description: "Robot held 1 Ball at start" },
-  12: { phase: "pre-match", description: "Robot held 2 Balls at start" },
-  13: { phase: "pre-match", description: "Robot held 3 Balls at start" },
+  10: { phase: "pre-match", description: "A: Started with 0 Balls" },
+  11: { phase: "pre-match", description: "A: Started with 1 Balls" },
+  12: { phase: "pre-match", description: "A: Started with 2 Balls" },
+  13: { phase: "pre-match", description: "A: Started with 3 Balls" },
 
   // Auto
-  20: { phase: "teleop", description: "Crossed the start line during autonomous" },
-  30: { phase: "teleop", description: "Missed a shot during autonomous" },
-  31: { phase: "teleop", description: "Scored a shot in the LOW goal during autonomous" },
-  32: { phase: "teleop", description: "Scored a shot in the high OUTER goal during autonomous" },
-  33: { phase: "teleop", description: "Scored a shot in the high INNER goal during autonomous" },
-  40: { phase: "teleop", description: "Loaded a ball during autonomous" },
+  20: { phase: "teleop", description: "A: Crossed start line" },
+  30: { phase: "teleop", description: "A: Missed a shot" },
+  31: { phase: "teleop", description: "A: Scored LOW goal " },
+  32: { phase: "teleop", description: "A: Scored high OUTER goal " },
+  33: { phase: "teleop", description: "A: Scored high INNER goal " },
+  40: { phase: "teleop", description: "A: Loaded a ball " },
 
   // Teleop
   5: { phase: "teleop", description: "Robot went into a disabled state" },
   6: { phase: "teleop", description: "Robot restored itself from being disabled" },
 
-  130: { phase: "teleop", description: "Missed a shot during teleop" },
-  131: { phase: "teleop", description: "Scored a shot in the LOW goal during teleop" },
-  132: { phase: "teleop", description: "Scored a shot in the high OUTER goal during teleop" },
-  133: { phase: "teleop", description: "Scored a shot in the high INNER goal during teleop" },
-  140: { phase: "teleop", description: "Loaded a ball during teleop" },
-  150: { phase: "teleop", description: "Spun the wheel at the control panel for 5 seconds" },
-  151: { phase: "teleop", description: "Spun the wheel to set the correct color at the control panel" },
+  130: { phase: "teleop", description: "T:Missed a shot" },
+  131: { phase: "teleop", description: "T:Scored LOW goal" },
+  132: { phase: "teleop", description: "T: Scored high OUTER goal" },
+  133: { phase: "teleop", description: "T: Scored high INNER goal" },
+  134: { phase: "teleop", description: "Passed a ball"},
+  140: { phase: "teleop", description: "T: Loaded a ball" },
+  150: { phase: "teleop", description: "Spun the wheel 5 seconds" },
+  151: { phase: "teleop", description: "Set the wheel to correct color" },
   107: { phase: "teleop", description: "Drove through the trench" },
 
   // Post-match
@@ -63,6 +64,7 @@ export enum EventCode {
   T_SHOT_LOW = 131,
   T_SHOT_OUTER = 132,
   T_SHOT_INNER = 133,
+  T_SHOT_PASS = 134,
   T_INTAKE_BALL = 140,
   SPIN_WHEEL = 150,
   SET_WHEEL_COLOR = 151,
