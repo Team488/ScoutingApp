@@ -4,6 +4,8 @@ import {
   Text,
 } from 'native-base';
 import React from 'react';
+import { useOnEvent } from './OnEventContext';
+import { EventCode } from 'src/record/Events';
 
 const styles = StyleSheet.create({
   eventButton: {
@@ -14,13 +16,12 @@ const styles = StyleSheet.create({
 
 export const EventButton = ({
   eventCode,
-  onEvent,
   label,
 }: {
-  eventCode: number;
-  onEvent: any;
+  eventCode: EventCode;
   label: string;
 }) => {
+  const onEvent = useOnEvent();
   return (
     <Button
       large
