@@ -67,23 +67,29 @@ export class MatchList {
 
   @action
   async loadData() {
-    const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/match_list.csv');
-    const rows = rawData.trim().split('\n');
-    const headers = rows[0].split(',');
+    let matches;
+    try {
+        const rawData = await RNFS.readFile(RNFS.ExternalStorageDirectoryPath + '/match_list.csv');
+        const rows = rawData.trim().split('\n');
+        const headers = rows[0].split(',');
 
-    const matches = rows.slice(1).map((r) => {
-      const item = r.split(',')
-      return [parseInt(item[0]), {
-        id: parseInt(item[0]),
-        time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a").toDate(),
-        red1: parseInt(item[3]),
-        red2: parseInt(item[4]),
-        red3: parseInt(item[5]),
-        blue1: parseInt(item[6]),
-        blue2: parseInt(item[7]),
-        blue3: parseInt(item[8]),
-      }] as [number, Match]
-    }).sort((a,b) => a[1].time.getTime() - b[1].time.getTime());
+        matches = rows.slice(1).map((r) => {
+          const item = r.split(',')
+          return [parseInt(item[0]), {
+            id: parseInt(item[0]),
+            time: moment(`${item[1]} ${item[2]}`, "D-MMM hh:mm a").toDate(),
+            red1: parseInt(item[3]),
+            red2: parseInt(item[4]),
+            red3: parseInt(item[5]),
+            blue1: parseInt(item[6]),
+            blue2: parseInt(item[7]),
+            blue3: parseInt(item[8]),
+          }] as [number, Match]
+        }).sort((a,b) => a[1].time.getTime() - b[1].time.getTime());
+
+    } catch (error) {
+        matches = [];
+    }
 
     // runInAction will update any observers that depend on this data
     runInAction(() => {
