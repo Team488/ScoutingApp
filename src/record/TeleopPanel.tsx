@@ -5,6 +5,7 @@ import {
 } from 'native-base';
 import ButtonCard from './ButtonCard';
 import { EventCode } from './Events';
+import { EventButton } from "../common/EventButton"
 
 export interface TimedEvent {
   timestamp: number,
@@ -171,10 +172,9 @@ export class TeleopPanel extends Component<Props, State> {
             <Row style={styles.row}>
               <Col style={styles.leftColumn}>
                 <ButtonCard title="Grabbed HATCH from" style={{ backgroundColor: "#f38181" }}>
-                  <Button large style={styles.eventButton}
-                    onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_FLOOR)}>
-                    <Text>Floor</Text>
-                  </Button>
+
+                  <EventButton label={"Floor"} eventCode={EventCode.GRAB_HATCH_FLOOR} onEvent={this.props.onEvent}/>
+
                   <Button large style={styles.eventButton}
                     onPress={(x) => this.emitEvent(EventCode.GRAB_HATCH_STATION)}>
                     <Text>Station</Text>
