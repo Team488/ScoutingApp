@@ -1,5 +1,6 @@
 import React from 'react';
-import RN, { StyleProp, StyleSheet, View, AsyncStorage, ViewStyle } from 'react-native';
+import RN, { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Body, Content, Grid, Icon, H2,  Header, Left, Right, Row, Col, Text, Title } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { inject, observer } from 'mobx-react';
