@@ -1,6 +1,14 @@
 # Getting started
 
-Follow the instructions [here]() to install Android Studio and React Native.
+## Prerequisites
+* [Install Android Studio](https://developer.android.com/studio/)
+* [Set up React Native CLI](https://reactnative.dev/docs/environment-setup)
+* Install Android SDK Command Line Tools
+    * In Android Studio: Tools > SDK Manager > Appearance and Behavior > System Setttings > Android SDK
+    * In the SDK Tools tab, check the box for Android SDK Command Line Tools and click OK to install
+    * Add an alias for `adp` to your path
+
+## Starting the app
 
 Start the app with 
 
