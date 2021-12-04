@@ -1,6 +1,6 @@
 import React from 'react';
 import {Header} from 'react-navigation';
-import { View, Alert, AsyncStorage} from 'react-native';
+import { View, Alert} from 'react-native';
 import { Button, Content, Grid, Row, Col, Picker, Text } from 'native-base';
 import { NavigationActions, NavigationScreenProps, createStackNavigator, createAppContainer } from 'react-navigation';
 import { connect, ConnectedComponent, MatchHistory, MatchList, Position } from '../store';

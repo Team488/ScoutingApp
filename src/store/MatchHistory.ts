@@ -1,6 +1,6 @@
 import RNFS from 'react-native-fs';
 import { action, computed, observable, runInAction } from 'mobx';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Match } from './MatchList';
 import moment from 'moment';
 

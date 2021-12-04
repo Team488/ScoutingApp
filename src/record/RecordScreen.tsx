@@ -7,6 +7,7 @@ import { EventList, MatchEvent } from './EventList';
 import { SandstormPanel } from './SandstormPanel';
 import { ScoutingAppHeader } from '../ScoutingAppHeader';
 import { ReadyModal } from './ReadyModal';
+import { EventTypes } from './Events';
 
 type State = {
   events: MatchEvent[],
